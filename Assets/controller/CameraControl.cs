@@ -1,47 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
 
+    // This is the object that the camera will follow
     public Transform target;
 
-    private float leftBorder = -7.5f;
-    private float rightBorder = 6.94f;
-    private float upBorder = 3.11f;
-    private float downBorder = -3.77f;
+    //Bound camera to limits
+    public bool limitBounds = false;
+    public float left = -50f;
+    public float right = 50f;
+    public float bottom = -50f;
+    public float top = 50f;
 
-    // Start is called before the first frame update
-    void Start()
+    private Vector3 lerpedPosition;
+
+    private Camera _camera;
+
+    private void Awake()
     {
-
+        _camera = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // FixedUpdate is called every frame, when the physics are calculated
+    void FixedUpdate()
     {
-
-        Vector3 vector = transform.position;
-        vector.x = target.position.x;
-        vector.y = target.position.y;
-        if(vector.x < leftBorder) {
-            vector.x = leftBorder;
-	    }
-        
-        if(vector.x > rightBorder) {
-            vector.x = rightBorder;
+        if (target != null)
+        {
+            // Find the right position between the camera and the object
+            lerpedPosition = Vector3.Lerp(transform.position, target.position, Time.deltaTime * 10f);
+            lerpedPosition.z = -10f;
         }
+    }
 
-        if (vector.y > upBorder) {
-            vector.y = upBorder;
+
+
+    // LateUpdate is called after all other objects have moved
+    void LateUpdate()
+    {
+        if (target != null)
+        {
+            // Move the camera in the position found previously
+            transform.position = lerpedPosition;
+
+            // Bounds the camera to the limits (if enabled)
+            if (limitBounds)
+            {
+                Vector3 bottomLeft = _camera.ScreenToWorldPoint(Vector3.zero);
+                Vector3 topRight = _camera.ScreenToWorldPoint(new Vector3(_camera.pixelWidth, _camera.pixelHeight));
+                Vector2 screenSize = new Vector2(topRight.x - bottomLeft.x, topRight.y - bottomLeft.y);
+
+                Vector3 boundPosition = transform.position;
+                if (boundPosition.x > right - (screenSize.x / 2f))
+                {
+                    boundPosition.x = right - (screenSize.x / 2f);
+                }
+                if (boundPosition.x < left + (screenSize.x / 2f))
+                {
+                    boundPosition.x = left + (screenSize.x / 2f);
+                }
+
+                if (boundPosition.y > top - (screenSize.y / 2f))
+                {
+                    boundPosition.y = top - (screenSize.y / 2f);
+                }
+                if (boundPosition.y < bottom + (screenSize.y / 2f))
+                {
+                    boundPosition.y = bottom + (screenSize.y / 2f);
+                }
+                transform.position = boundPosition;
+            }
         }
-        if (vector.y < downBorder) {
-            vector.y = downBorder;
-        }
-
-
-        transform.position = vector;
-
     }
 }
