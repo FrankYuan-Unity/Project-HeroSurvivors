@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : BaseObject
 {
     private Animator ani;
     private Rigidbody2D rb;
@@ -22,22 +22,24 @@ public class PlayerControl : MonoBehaviour
         //垂直轴
         float vertical = Input.GetAxisRaw("Vertical");
         //按下左或者右
-        if (horizontal != 0) 
-	    {
+        if (horizontal != 0)
+        {
             ani.SetFloat("Horizontal", horizontal);
             ani.SetFloat("Vertical", 0);
-	    }
+        }
         //按下上或者下
         if (vertical != 0)
         {
             ani.SetFloat("Vertical", vertical);
             ani.SetFloat("Horizontal", 0);
-	     }
+        }
         //切换运动
         Vector2 dir = new Vector2(horizontal, vertical);
         ani.SetFloat("Speed", dir.magnitude);
 
         //朝该方向移动
         rb.velocity = dir * 2f;
+
+        resetPosition(true);
     }
 }
