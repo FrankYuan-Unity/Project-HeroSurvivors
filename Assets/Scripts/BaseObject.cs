@@ -59,7 +59,7 @@ public class BaseObject : MonoBehaviour
 
         transform.position = vector;
 
-        EventCenter.Instance.EventTrigger("PlayerTranslate", translate);
+
     }
 
 

@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : BaseObject
+public class PlayerControl : MonoBehaviour
 {
     private Animator ani;
     private Rigidbody2D rb;
+
+    public Vector3 original = new Vector3(0.5f, 0.5f, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +43,55 @@ public class PlayerControl : BaseObject
         //朝该方向移动
         rb.velocity = dir * 2f;
 
-        resetPosition(true);
+        //resetPosition(true);
+        calculateDistance();
+    }
+
+    private void calculateDistance()
+    {
+
+        Vector3 v = transform.position;
+
+        if (isNeedTranslateMap(v))
+        {
+            EventCenter.Instance.EventTrigger("PlayerTranslate", v);
+        }
+
+    }
+    public float leftBorder = 0.5f;
+    public float rightBorder = 13.5f;
+    public float topBorder = 0.5f;
+    public float bottomBorder = 8.5f;
+
+    private bool isNeedTranslateMap(Vector3 v)
+    {
+
+        if (v.x < leftBorder)
+        {
+            leftBorder -= 13;
+            rightBorder -= 13;
+            return true;
+        }
+
+        if (v.x > rightBorder)
+        {
+            leftBorder += 13;
+            rightBorder += 13;
+            return true;
+        }
+        if (v.y > topBorder)
+        {
+            topBorder += 8;
+            bottomBorder += 8;
+            return true;
+        }
+
+        if (v.y < bottomBorder)
+        {
+            topBorder -= 8;
+            bottomBorder -= 8;
+            return true;
+        }
+        return false;
     }
 }

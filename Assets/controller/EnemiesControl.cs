@@ -18,7 +18,7 @@ public class EnemiesControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        EventCenter.Instance.AddEventListener("PlayerTranslate", ResetPosition);
+
 
     }
 
@@ -84,7 +84,7 @@ public class EnemiesControl : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventCenter.Instance.RemoveEventListener("PlayerTranslate", ResetPosition);
+
     }
 }
 
