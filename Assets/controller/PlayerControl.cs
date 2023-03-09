@@ -7,8 +7,7 @@ public class PlayerControl : MonoBehaviour
 {
     private Animator ani;
     private Rigidbody2D rb;
-
-    public Vector3 original = new Vector3(0.5f, 0.5f, 0);
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -41,10 +40,10 @@ public class PlayerControl : MonoBehaviour
         ani.SetFloat("Speed", dir.magnitude);
 
         //朝该方向移动
-        rb.velocity = dir * 2f;
+        rb.velocity = dir * 5f;
 
         //resetPosition(true);
-        calculateDistance();
+        //calculateDistance();
     }
 
     private void calculateDistance()
@@ -58,40 +57,53 @@ public class PlayerControl : MonoBehaviour
         }
 
     }
-    public float leftBorder = 0.5f;
-    public float rightBorder = 13.5f;
-    public float topBorder = 0.5f;
-    public float bottomBorder = 8.5f;
+    public float l =0f;
+    public float r = 13f;
+    public float t = 0f;
+    public float b = -8f;
 
     private bool isNeedTranslateMap(Vector3 v)
     {
 
-        if (v.x < leftBorder)
+        if (v.x < l)
         {
-            leftBorder -= 13;
-            rightBorder -= 13;
+            l -= 13;
+            r -= 13;
+            //printLog(v, 1);
             return true;
         }
 
-        if (v.x > rightBorder)
+        if (v.x > r)
         {
-            leftBorder += 13;
-            rightBorder += 13;
+            l += 13;
+            r += 13;
+            printLog(v, 2);
             return true;
         }
-        if (v.y > topBorder)
+        if (v.y > t)
         {
-            topBorder += 8;
-            bottomBorder += 8;
+            t += 8;
+            b += 8;
+            //printLog(v, 3);
             return true;
         }
-
-        if (v.y < bottomBorder)
+        
+        if (v.y < b)
         {
-            topBorder -= 8;
-            bottomBorder -= 8;
+            t -= 8;
+            b -= 8;
+            //printLog(v, 4);
             return true;
         }
         return false;
+    }
+
+    void printLog(Vector3 v, int index) { 
+        Debug.Log(index + "translate position:" + v.ToString());
+        Debug.Log(index + "leftborder :" + l);
+        Debug.Log(index + "rightborder :" + r);
+        Debug.Log(index + "topborder :" + t);
+        Debug.Log(index + "bottomborder :" + b);
+
     }
 }

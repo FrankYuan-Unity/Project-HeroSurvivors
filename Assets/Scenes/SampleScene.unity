@@ -465,7 +465,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 3.6468866
+  orthographic size: 3.4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -489,7 +489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.47, y: 0.37, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -753,6 +753,7 @@ GameObject:
   - component: {fileID: 649598102}
   - component: {fileID: 649598104}
   - component: {fileID: 649598103}
+  - component: {fileID: 649598105}
   m_Layer: 0
   m_Name: Tilemap3
   m_TagString: Untagged
@@ -2002,6 +2003,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &649598105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649598101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38da0cc6c5e6949d6bc18752fd2833de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &826069490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,7 +2096,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826069490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2143,6 +2156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874231afcaf8e47b5943b81c4a62335d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  l: 0
+  r: 13
+  t: 0
+  b: -8
 --- !u!61 &826069496
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3442,11 +3459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38da0cc6c5e6949d6bc18752fd2833de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 867451510}
-  target: {fileID: 826069492}
-  translate: {x: 0, y: 0, z: 0}
-  original: {x: 0.5, y: 0.5, z: 0}
-  v3Int: {x: 0, y: 0, z: 0}
 --- !u!1 &1060584363
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,6 +3470,7 @@ GameObject:
   - component: {fileID: 1060584364}
   - component: {fileID: 1060584366}
   - component: {fileID: 1060584365}
+  - component: {fileID: 1060584367}
   m_Layer: 0
   m_Name: Tilemap2
   m_TagString: Untagged
@@ -4707,6 +4720,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1060584367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060584363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38da0cc6c5e6949d6bc18752fd2833de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1141212077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4886,6 +4911,7 @@ GameObject:
   - component: {fileID: 1423263051}
   - component: {fileID: 1423263053}
   - component: {fileID: 1423263052}
+  - component: {fileID: 1423263054}
   m_Layer: 0
   m_Name: Tilemap4
   m_TagString: Untagged
@@ -6135,6 +6161,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1423263054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423263050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38da0cc6c5e6949d6bc18752fd2833de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1495447203
 GameObject:
   m_ObjectHideFlags: 0
@@ -6281,7 +6319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1511421457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.2, y: -3.31, z: 0}
+  m_LocalPosition: {x: 12.36, y: -3.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6309,11 +6347,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8799090356872395714, guid: 6550394b0c65542fb9eb5bcf2b679779, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8799090356872395714, guid: 6550394b0c65542fb9eb5bcf2b679779, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8799090356872395714, guid: 6550394b0c65542fb9eb5bcf2b679779, type: 3}
       propertyPath: m_LocalPosition.z
