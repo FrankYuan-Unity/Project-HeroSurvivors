@@ -2,16 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerControl : MonoBehaviour
 {
     private Animator ani;
     private Rigidbody2D rb;
- 
+    public GameObject angryPigPrefab;
 
+    private float createEnemyTime = 2f; //每两秒随机生成一次敌人
+    Vector3 size;
     // Start is called before the first frame update
     void Start()
     {
+      size   = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         //获取组件
         ani = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -42,8 +46,26 @@ public class PlayerControl : MonoBehaviour
         //朝该方向移动
         rb.velocity = dir * 5f;
 
+        CreateEnemy();
+
         //resetPosition(true);
         //calculateDistance();
+    }
+
+    public void CreateEnemy()
+    {
+        createEnemyTime -= Time.deltaTime;
+        Vector3 original = transform.position;
+
+
+        if (createEnemyTime <= 0)
+        {
+            createEnemyTime = 2f;
+
+            Instantiate(angryPigPrefab, new Vector3(Random.Range(original.x + size.x / 2, original.x - size.x / 2), Random.Range(original.y + size.y / 2, original.y - size.y / 2), 0), Quaternion.identity);
+
+        }
+
     }
 
     private void calculateDistance()
@@ -57,14 +79,13 @@ public class PlayerControl : MonoBehaviour
         }
 
     }
-    public float l =0f;
+    public float l = 0f;
     public float r = 13f;
     public float t = 0f;
     public float b = -8f;
 
     private bool isNeedTranslateMap(Vector3 v)
     {
-
         if (v.x < l)
         {
             l -= 13;
@@ -77,7 +98,7 @@ public class PlayerControl : MonoBehaviour
         {
             l += 13;
             r += 13;
-            printLog(v, 2);
+
             return true;
         }
         if (v.y > t)
@@ -87,7 +108,7 @@ public class PlayerControl : MonoBehaviour
             //printLog(v, 3);
             return true;
         }
-        
+
         if (v.y < b)
         {
             t -= 8;
@@ -98,12 +119,4 @@ public class PlayerControl : MonoBehaviour
         return false;
     }
 
-    void printLog(Vector3 v, int index) { 
-        Debug.Log(index + "translate position:" + v.ToString());
-        Debug.Log(index + "leftborder :" + l);
-        Debug.Log(index + "rightborder :" + r);
-        Debug.Log(index + "topborder :" + t);
-        Debug.Log(index + "bottomborder :" + b);
-
-    }
 }

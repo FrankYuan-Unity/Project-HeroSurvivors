@@ -6,18 +6,12 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tilemap4Control.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WeaponScript.cs">
     <Files>
-      <File FileName="Assets/Scripts/Tilemap1Control.cs" Line="43" Column="1" IsPinned="True" />
-      <File FileName="Assets/controller/CameraControl.cs" Line="26" Column="6" />
-      <File FileName="Assets/controller/PlayerControl.cs" Line="60" Column="18" />
-      <File FileName="Assets/controller/EnemiesControl.cs" Line="87" Column="1" />
-      <File FileName="Assets/Scripts/EventCenter.cs" Line="31" Column="23" />
-      <File FileName="Assets/Scripts/base/GlobalConfig.cs" Line="9" Column="40" />
-      <File FileName="Assets/Scripts/TilemapController.cs" Line="15" Column="39" />
-      <File FileName="Assets/Scripts/Tilemap2Control.cs" Line="11" Column="6" />
-      <File FileName="Assets/Scripts/Tilemap3Control.cs" Line="5" Column="22" />
-      <File FileName="Assets/Scripts/Tilemap4Control.cs" Line="5" Column="22" />
+      <File FileName="Assets/Scripts/Tilemap1Control.cs" Line="6" Column="21" IsPinned="True" />
+      <File FileName="Assets/WeaponScript.cs" Line="42" Column="20" />
+      <File FileName="Assets/BulletScript.cs" Line="43" Column="1" />
+      <File FileName="Assets/controller/EnemiesControl.cs" Line="49" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,7 +20,7 @@
             <Node name="Assets" expanded="True">
               <Node name="controller" expanded="True" />
               <Node name="Scripts" expanded="True">
-                <Node name="Tilemap4Control.cs" selected="True" />
+                <Node name="WeaponScript.cs" selected="True" />
               </Node>
             </Node>
           </Node>
