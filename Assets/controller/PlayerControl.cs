@@ -9,13 +9,17 @@ public class PlayerControl : MonoBehaviour
     private Animator ani;
     private Rigidbody2D rb;
     public GameObject angryPigPrefab;
-
+    public GameObject[] guns;
     private float createEnemyTime = 2f; //每两秒随机生成一次敌人
+    private int gunIndex;
+
+
     Vector3 size;
     // Start is called before the first frame update
     void Start()
     {
-      size   = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        guns[0].SetActive(true);
+        size   = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         //获取组件
         ani = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -23,6 +27,9 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        SwitchGun();
+
         //获取水平轴 -1 0 1
         float horizontal = Input.GetAxisRaw("Horizontal");
         //垂直轴
@@ -47,6 +54,9 @@ public class PlayerControl : MonoBehaviour
         rb.velocity = dir * 5f;
 
         CreateEnemy();
+
+
+    
 
         //resetPosition(true);
         //calculateDistance();
@@ -118,5 +128,43 @@ public class PlayerControl : MonoBehaviour
         }
         return false;
     }
+
+
+
+    private void SwitchGun()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+
+            SetGunIndexActive(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+
+            SetGunIndexActive(1);
+        }
+
+    }
+
+
+    private void SetGunIndexActive(int index)
+    {
+
+        int length = guns.Length;
+
+        if (index >= length || index < 0)
+        {
+            return;
+        }
+        for (int i = 0; i < length; i++)
+        {
+            guns[i].SetActive(false);
+        }
+        guns[index].SetActive(true);
+    }
+
+  
+
 
 }
