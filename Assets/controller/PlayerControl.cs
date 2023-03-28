@@ -10,16 +10,16 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody2D rb;
     public GameObject angryPigPrefab;
     public GameObject[] guns;
-    private float createEnemyTime = 2f; //每两秒随机生成一次敌人
+    private float createEnemyTime = 0.2f; //每两秒随机生成一次敌人
     private int gunIndex;
-
+    public FixedJoystick joystick; //摇杆
 
     Vector3 size;
     // Start is called before the first frame update
     void Start()
     {
-        guns[0].SetActive(true);
-        size   = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        guns[1].SetActive(true);
+        size = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         //获取组件
         ani = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -30,24 +30,41 @@ public class PlayerControl : MonoBehaviour
 
         SwitchGun();
 
+
         //获取水平轴 -1 0 1
         float horizontal = Input.GetAxisRaw("Horizontal");
-        //垂直轴
         float vertical = Input.GetAxisRaw("Vertical");
-        //按下左或者右
+        if (Util.isMobile())
+        {
+            Debug.Log("判断是否是移动端");
+
+            horizontal = getAnimParam(joystick.Horizontal);
+
+            vertical = getAnimParam(joystick.Vertical);
+        }
+        Debug.Log("horizontal = " + horizontal);
+        Debug.Log("vertical = " + vertical);
+
+     
+
+        ////按下左或者右
         if (horizontal != 0)
         {
-            ani.SetFloat("Horizontal", horizontal);
+            ani.SetFloat("Horizontal", -1);
             ani.SetFloat("Vertical", 0);
         }
+
         //按下上或者下
         if (vertical != 0)
-        {
+        { 
             ani.SetFloat("Vertical", vertical);
             ani.SetFloat("Horizontal", 0);
         }
+
+      
         //切换运动
         Vector2 dir = new Vector2(horizontal, vertical);
+        Debug.Log("direction = " + dir.magnitude);
         ani.SetFloat("Speed", dir.magnitude);
 
         //朝该方向移动
@@ -55,12 +72,16 @@ public class PlayerControl : MonoBehaviour
 
         CreateEnemy();
 
-
-    
-
         //resetPosition(true);
         //calculateDistance();
     }
+    private float getAnimParam(float dir)
+    {
+        float res = (float)(dir > 0 ? Math.Ceiling(dir) : Math.Floor(dir));
+        Debug.Log("calculateResult = " + res);
+        return res;
+    }
+ 
 
     public void CreateEnemy()
     {
@@ -77,58 +98,6 @@ public class PlayerControl : MonoBehaviour
         }
 
     }
-
-    private void calculateDistance()
-    {
-
-        Vector3 v = transform.position;
-
-        if (isNeedTranslateMap(v))
-        {
-            EventCenter.Instance.EventTrigger("PlayerTranslate", v);
-        }
-
-    }
-    public float l = 0f;
-    public float r = 13f;
-    public float t = 0f;
-    public float b = -8f;
-
-    private bool isNeedTranslateMap(Vector3 v)
-    {
-        if (v.x < l)
-        {
-            l -= 13;
-            r -= 13;
-            //printLog(v, 1);
-            return true;
-        }
-
-        if (v.x > r)
-        {
-            l += 13;
-            r += 13;
-
-            return true;
-        }
-        if (v.y > t)
-        {
-            t += 8;
-            b += 8;
-            //printLog(v, 3);
-            return true;
-        }
-
-        if (v.y < b)
-        {
-            t -= 8;
-            b -= 8;
-            //printLog(v, 4);
-            return true;
-        }
-        return false;
-    }
-
 
 
     private void SwitchGun()
@@ -164,7 +133,7 @@ public class PlayerControl : MonoBehaviour
         guns[index].SetActive(true);
     }
 
-  
+
 
 
 }
