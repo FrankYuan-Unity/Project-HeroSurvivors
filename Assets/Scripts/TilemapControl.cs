@@ -23,10 +23,7 @@ public class TilemapControl : MonoBehaviour
     {
         Vector3 mapPosition = transform.position;
 
-        Debug.Log("Camera position" + mainCam.transform.position.ToString());
-        Debug.Log("tile position" + this.transform.position.ToString());
-
-
+     
         if (mainCam.transform.position.x - transform.position.x > map_width )
         {
             mapPosition.x += map_width *2;

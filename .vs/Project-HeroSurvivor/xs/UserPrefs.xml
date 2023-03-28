@@ -1,23 +1,17 @@
 ﻿<Properties StartupConfiguration="{7E772019-1551-B737-CEBE-EBD229FFBF47}|">
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="85bc0568-dbdc-4b5c-8cc5-0ef86235b85f" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tilemap4Control.cs">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/res/Joystick Pack/Scripts/Base/Joystick.cs">
     <Files>
-      <File FileName="Assets/Scripts/Tilemap1Control.cs" Line="43" Column="1" IsPinned="True" />
-      <File FileName="Assets/controller/CameraControl.cs" Line="26" Column="6" />
-      <File FileName="Assets/controller/PlayerControl.cs" Line="60" Column="18" />
-      <File FileName="Assets/controller/EnemiesControl.cs" Line="87" Column="1" />
-      <File FileName="Assets/Scripts/EventCenter.cs" Line="31" Column="23" />
-      <File FileName="Assets/Scripts/base/GlobalConfig.cs" Line="9" Column="40" />
-      <File FileName="Assets/Scripts/TilemapController.cs" Line="15" Column="39" />
-      <File FileName="Assets/Scripts/Tilemap2Control.cs" Line="11" Column="6" />
-      <File FileName="Assets/Scripts/Tilemap3Control.cs" Line="5" Column="22" />
-      <File FileName="Assets/Scripts/Tilemap4Control.cs" Line="5" Column="22" />
+      <File FileName="Assets/controller/EnemiesControl.cs" Line="7" Column="14" IsPinned="True" />
+      <File FileName="../../Mediation-Demo-Apps-master/Unity1/Assets/MyScripts/MyAppStart.cs" Line="1" Column="1" />
+      <File FileName="../../Mediation-Demo-Apps-master/Unity1/Assets/MyScripts/ShowRewardedVideoScript.cs" Line="53" Column="25" />
+      <File FileName="Assets/Scripts/WeaponScript.cs" Line="86" Column="75" />
+      <File FileName="Assets/Scripts/Pistol.cs" Line="20" Column="1" />
+      <File FileName="Assets/StartGameScript.cs" Line="7" Column="4" />
+      <File FileName="Assets/Scripts/BulletScript.cs" Line="28" Column="16" />
+      <File FileName="Assets/Scripts/TilemapControl.cs" Line="26" Column="5" />
+      <File FileName="Assets/res/Joystick Pack/Scripts/Base/Joystick.cs" Line="50" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,7 +20,7 @@
             <Node name="Assets" expanded="True">
               <Node name="controller" expanded="True" />
               <Node name="Scripts" expanded="True">
-                <Node name="Tilemap4Control.cs" selected="True" />
+                <Node name="BulletScript.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -42,4 +36,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d73f607a-0945-411e-84ba-abeec2cd469e" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
