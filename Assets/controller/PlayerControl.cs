@@ -68,7 +68,7 @@ public class PlayerControl : MonoBehaviour
         ani.SetFloat("Speed", dir.magnitude);
 
         //朝该方向移动
-        rb.velocity = dir * 5f;
+        rb.velocity = dir * 2f;
 
         CreateEnemy();
 
