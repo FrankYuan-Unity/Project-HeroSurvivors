@@ -21,14 +21,16 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = (transform.position - startPosition).sqrMagnitude;
-
-        if(distance > destoryDistance) {
-            Destroy(gameObject);
-        }
+      
 
     }
- 
+
+    //子弹飞出屏幕后销毁
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -39,7 +41,7 @@ public class BulletScript : MonoBehaviour
             enemies.TakeDamage(damage);
             Debug.Log("enemy name" + collision.name);
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 }

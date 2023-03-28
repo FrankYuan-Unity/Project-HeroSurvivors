@@ -36,10 +36,12 @@ public class WeaponScript : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
+            Debug.Log("手枪开枪");
             Shoot();
         }
         else if (Input.GetButton("Fire1") && transform.name.Equals("Gun002"))
         {
+            Debug.Log("冲锋枪开枪");
             GatlingShoot();
         }
 
