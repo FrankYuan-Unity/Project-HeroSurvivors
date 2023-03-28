@@ -1,17 +1,13 @@
 ﻿<Properties StartupConfiguration="{7E772019-1551-B737-CEBE-EBD229FFBF47}|">
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="85bc0568-dbdc-4b5c-8cc5-0ef86235b85f" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WeaponScript.cs">
     <Files>
-      <File FileName="Assets/controller/EnemiesControl.cs" Line="22" Column="36" />
-      <File FileName="Assets/controller/PlayerControl.cs" Line="37" Column="27" />
-      <File FileName="Assets/Scripts/BulletScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WeaponScript.cs" Line="82" Column="6" />
+      <File FileName="Assets/controller/EnemiesControl.cs" Line="22" Column="36" IsPinned="True" />
+      <File FileName="Assets/Scripts/WeaponScript.cs" Line="45" Column="1" />
+      <File FileName="Assets/controller/PlayerControl.cs" Line="12" Column="30" />
+      <File FileName="Assets/Scripts/BulletScript.cs" Line="24" Column="37" />
+      <File FileName="Assets/Scripts/Pistol.cs" Line="20" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,4 +32,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d73f607a-0945-411e-84ba-abeec2cd469e" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

@@ -7,25 +7,28 @@ public class BulletScript : MonoBehaviour
     public float speed = 5f;
     public Rigidbody2D rb;
     private int damage = 40;
+    private float destoryDistance = 40f;
+    private Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
     {
 
         rb.velocity = transform.right * speed;
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        float distance = (transform.position - startPosition).sqrMagnitude;
+
+        if(distance > destoryDistance) {
+            Destroy(gameObject);
+        }
 
     }
-
-    //飞出摄像机视野销毁子弹
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
+ 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
