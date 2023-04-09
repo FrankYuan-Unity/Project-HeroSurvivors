@@ -12,8 +12,9 @@ public class EnemiesControl : MonoBehaviour
     public GameObject target;
     private Rigidbody2D rb;
 
-    private int blood = 70;
-
+    private int blood = 70; //血量
+    public int damage = 200; //伤害
+    
     private Vector3 scaleV;
     // Start is called before the first frame update
     void Start()

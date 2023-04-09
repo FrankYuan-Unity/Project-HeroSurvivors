@@ -14,6 +14,8 @@ public class PlayerControl : MonoBehaviour
     private int gunIndex;
     public FixedJoystick joystick; //摇杆
 
+    public int blood = 1000; //血量
+
     Vector3 size;
     // Start is called before the first frame update
     void Start()
@@ -81,7 +83,43 @@ public class PlayerControl : MonoBehaviour
         Debug.Log("calculateResult = " + res);
         return res;
     }
- 
+
+    public void TakeDamage(int damage)
+    {
+        blood -= damage;
+        Debug.Log("当前血量 ---" + blood);
+        if (blood <= 0)
+        {
+            //joystick.gameObject.SetActive(false);
+            GameObject.Find("Main Camera").GetComponent<MemuList>().Pause();
+        }
+    }
+
+    public void Revive() {
+        blood = 1000;
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Enemies"))
+        {
+            EnemiesControl enemies = collision.gameObject.GetComponent<EnemiesControl>();
+            if (enemies != null)
+               TakeDamage(enemies.damage);
+        }
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        //if (collision.gameObject.tag.Equals("Enemies"))
+        //{
+        //    speed = 0.5f;
+        //}
+
+    }
+
 
     public void CreateEnemy()
     {

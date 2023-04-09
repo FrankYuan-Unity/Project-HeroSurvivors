@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class StartGameScript : MonoBehaviour
 {
-
- 
+    public static bool playAdsVideo = false;
+     
     private void Awake()
     {
         
@@ -83,14 +83,22 @@ public class StartGameScript : MonoBehaviour
 
     public void startGameButtonClicked() {
         Time.timeScale = 1;
-      
-        if (IronSource.Agent.isInterstitialReady()) {
-            Debug.Log("全屏广告已加载"); 
-	       IronSource.Agent.showInterstitial();
+
+        if (playAdsVideo) {
+            if (IronSource.Agent.isInterstitialReady())
+            {
+                Debug.Log("全屏广告已加载");
+                IronSource.Agent.showInterstitial();
+            }
+            else
+            {
+                Debug.Log("全屏广告暂时未准备好");
+            }
         }
         else {
-            Debug.Log("全屏广告暂时未准备好");
+            gameObject.SetActive(false);
         }
+      
       
     }
 
@@ -116,6 +124,7 @@ public class StartGameScript : MonoBehaviour
     // The Rewarded Video ad view is about to be closed. Your activity will regain its focus.
     void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
     {
+        GameObject.Find("Main Camera").GetComponent<MemuList>().Revive();
     }
     // The user completed to watch the video, and should be rewarded.
     // The placement parameter will include the reward data.
