@@ -32,7 +32,6 @@ public class PlayerControl : MonoBehaviour
 
         SwitchGun();
 
-
         //获取水平轴 -1 0 1
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -47,8 +46,6 @@ public class PlayerControl : MonoBehaviour
         Debug.Log("horizontal = " + horizontal);
         Debug.Log("vertical = " + vertical);
 
-     
-
         ////按下左或者右
         if (horizontal != 0)
         {
@@ -62,7 +59,6 @@ public class PlayerControl : MonoBehaviour
             ani.SetFloat("Vertical", vertical);
             ani.SetFloat("Horizontal", 0);
         }
-
       
         //切换运动
         Vector2 dir = new Vector2(horizontal, vertical);

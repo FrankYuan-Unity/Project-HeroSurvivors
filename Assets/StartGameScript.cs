@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StartGameScript : MonoBehaviour
 {
-    public static bool playAdsVideo = false;
+    public static bool playAdsVideo = true;
      
     private void Awake()
     {
