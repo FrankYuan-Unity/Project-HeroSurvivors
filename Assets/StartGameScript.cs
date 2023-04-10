@@ -24,6 +24,12 @@ public class StartGameScript : MonoBehaviour
 #else
         string appKey = "8545d445";
 #endif
+        //Init AdQuality
+        ISAdQualityConfig adQualityConfig = new ISAdQualityConfig();
+        adQualityConfig.UserId = "MyUserId";
+        IronSourceAdQuality.Initialize(appKey, adQualityConfig);
+
+        //Init IronSource SDK
         IronSource.Agent.shouldTrackNetworkState(true);
         string id = IronSource.Agent.getAdvertiserId();
         Debug.Log("unity-script: IronSource.Agent.getAdvertiserId : " + id);
