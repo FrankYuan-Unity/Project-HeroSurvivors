@@ -30,48 +30,52 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
 
-        SwitchGun();
-
-        //获取水平轴 -1 0 1
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        if (Util.isMobile())
+        if (StartGameScript.startGame)
         {
-            Debug.Log("判断是否是移动端");
+            SwitchGun();
 
-            horizontal = getAnimParam(joystick.Horizontal);
+            //获取水平轴 -1 0 1
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            if (Util.isMobile())
+            {
+                Debug.Log("判断是否是移动端");
 
-            vertical = getAnimParam(joystick.Vertical);
+                horizontal = getAnimParam(joystick.Horizontal);
+
+                vertical = getAnimParam(joystick.Vertical);
+            }
+            Debug.Log("horizontal = " + horizontal);
+            Debug.Log("vertical = " + vertical);
+
+            ////按下左或者右
+            if (horizontal != 0)
+            {
+                ani.SetFloat("Horizontal", -1);
+                ani.SetFloat("Vertical", 0);
+            }
+
+            //按下上或者下
+            if (vertical != 0)
+            {
+                ani.SetFloat("Vertical", vertical);
+                ani.SetFloat("Horizontal", 0);
+            }
+
+            //切换运动
+            Vector2 dir = new Vector2(horizontal, vertical);
+            Debug.Log("direction = " + dir.magnitude);
+            ani.SetFloat("Speed", dir.magnitude);
+
+            //朝该方向移动
+            rb.velocity = dir * 2f;
+
+            CreateEnemy();
+
+            //resetPosition(true);
+            //calculateDistance();
         }
-        Debug.Log("horizontal = " + horizontal);
-        Debug.Log("vertical = " + vertical);
 
-        ////按下左或者右
-        if (horizontal != 0)
-        {
-            ani.SetFloat("Horizontal", -1);
-            ani.SetFloat("Vertical", 0);
-        }
-
-        //按下上或者下
-        if (vertical != 0)
-        { 
-            ani.SetFloat("Vertical", vertical);
-            ani.SetFloat("Horizontal", 0);
-        }
-      
-        //切换运动
-        Vector2 dir = new Vector2(horizontal, vertical);
-        Debug.Log("direction = " + dir.magnitude);
-        ani.SetFloat("Speed", dir.magnitude);
-
-        //朝该方向移动
-        rb.velocity = dir * 2f;
-
-        CreateEnemy();
-
-        //resetPosition(true);
-        //calculateDistance();
     }
     private float getAnimParam(float dir)
     {
@@ -91,7 +95,8 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void Revive() {
+    public void Revive()
+    {
         blood = 1000;
 
     }
@@ -102,7 +107,7 @@ public class PlayerControl : MonoBehaviour
         {
             EnemiesControl enemies = collision.gameObject.GetComponent<EnemiesControl>();
             if (enemies != null)
-               TakeDamage(enemies.damage);
+                TakeDamage(enemies.damage);
         }
 
     }
@@ -121,16 +126,12 @@ public class PlayerControl : MonoBehaviour
     {
         createEnemyTime -= Time.deltaTime;
         Vector3 original = transform.position;
-
-
         if (createEnemyTime <= 0)
         {
             createEnemyTime = 2f;
 
             Instantiate(angryPigPrefab, new Vector3(Random.Range(original.x + size.x / 2, original.x - size.x / 2), Random.Range(original.y + size.y / 2, original.y - size.y / 2), 0), Quaternion.identity);
-
         }
-
     }
 
 

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- 
+using UnityEngine.SceneManagement;
 
 public class StartGameScript : MonoBehaviour
 {
-    public static bool playAdsVideo = true;
+    public static bool playAdsVideo = false;
+    public static bool startGame = false;
+    public Toast toast;
      
     private void Awake()
     {
@@ -15,7 +17,7 @@ public class StartGameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;
+      
 
 #if UNITY_ANDROID
         string appKey = "8545d445";
@@ -68,6 +70,9 @@ public class StartGameScript : MonoBehaviour
         IronSource.Agent.init(appKey);
         IronSource.Agent.loadInterstitial();
         IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+
+
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -87,9 +92,15 @@ public class StartGameScript : MonoBehaviour
         IronSource.Agent.onApplicationPause(isPaused);
     }
 
-    public void startGameButtonClicked() {
-        Time.timeScale = 1;
+    public void ExitButtonClick() {
+        Application.Quit();
+    }
 
+    public void startGameButtonClicked() {
+ 
+        startGame = true;
+        toast.Show("加载GameScene");
+        
         if (playAdsVideo) {
             if (IronSource.Agent.isInterstitialReady())
             {
@@ -102,7 +113,8 @@ public class StartGameScript : MonoBehaviour
             }
         }
         else {
-            gameObject.SetActive(false);
+            Debug.Log("加载GameScene");
+            SceneManager.LoadScene("GameScene");
         }
       
       
@@ -173,7 +185,7 @@ public class StartGameScript : MonoBehaviour
     // Invoked when the interstitial ad closed and the user went back to the application screen.
     void InterstitialOnAdClosedEvent(IronSourceAdInfo adInfo)
     {
-        gameObject.SetActive(false);
+        SceneManager.LoadScene("GameScene");
     }
     // Invoked before the interstitial ad was opened, and before the InterstitialOnAdOpenedEvent is reported.
     // This callback is not supported by all networks, and we recommend using it only if  

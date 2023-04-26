@@ -4,44 +4,50 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public float speed = 8f;
+
+ 
     public Rigidbody2D rb;
-    private int damage = 40;
+    private int damage = 40;// 子弹伤害
     private float destoryDistance = 40f;
     private Vector3 startPosition;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    public float speed = 10f; // 子弹速度
+    public float lifeTime = 2f; // 子弹寿命
+ 
 
-        rb.velocity = transform.right * speed;
-        startPosition = transform.position;
+    private void Start()
+    {
+        // 设置子弹寿命
+        Destroy(gameObject, lifeTime);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-      
-
+        // 在每一帧中移动子弹
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    //子弹飞出屏幕后销毁
-    private void OnBecameInvisible()
+    // 当子弹触发其他碰撞器时调用
+    private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        EnemiesControl enemies = collision.GetComponent<EnemiesControl>();
-        if (enemies != null)
+        // 如果碰到敌人
+        if (other.CompareTag("Enemy"))
         {
-            enemies.TakeDamage(damage);
-            Debug.Log("enemy name" + collision.name);
+            // 对敌人造成伤害
+            other.GetComponent<EnemiesControl>().TakeDamage(damage);
+            // 播放命中效果
+            // ...
+        
         }
-        //Destroy(gameObject);
+        // 如果碰到其他物体
+        else
+        {
+            // 播放其他效果
+            // ...
+            // 销毁子弹
+            Destroy(gameObject);
+        }
     }
+
 
 }
