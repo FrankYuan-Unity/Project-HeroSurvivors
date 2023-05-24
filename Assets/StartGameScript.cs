@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,81 +5,91 @@ public class StartGameScript : MonoBehaviour
 {
     public static bool playAdsVideo = false;
     public static bool startGame = false;
-    public Toast toast;
-     
+    
+    private PopupDialog dialog;
+
+    public GameObject dialogPreb;
+
     private void Awake()
     {
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-      
+        ISAdQualityConfig config = new ISAdQualityConfig();
+         
+        dialog = dialogPreb.GetComponent<PopupDialog>();
 
+        if (playAdsVideo)
+        {
 #if UNITY_ANDROID
-        string appKey = "8545d445";
+        string appKey = "1a1d6ffcd";
 #elif UNITY_IPHONE
         string appKey = "8545d445";
 #else
-        string appKey = "8545d445";
+            string appKey = "1a1d6ffcd";
 #endif
-        //Init AdQuality
-        ISAdQualityConfig adQualityConfig = new ISAdQualityConfig();
-        adQualityConfig.UserId = "MyUserId";
-        IronSourceAdQuality.Initialize(appKey, adQualityConfig);
-
-        //Init IronSource SDK
-        IronSource.Agent.shouldTrackNetworkState(true);
-        string id = IronSource.Agent.getAdvertiserId();
-        Debug.Log("unity-script: IronSource.Agent.getAdvertiserId : " + id);
-
-        Debug.Log("unity-script: IronSource.Agent.validateIntegration");
-        IronSource.Agent.validateIntegration();
-        IronSourceEvents.onImpressionDataReadyEvent += ImpressionDataReadyEvent;
-        //Add AdInfo Rewarded Video Events
-        IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
-        IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
-        IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
-        IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
-        IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
-        IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
-        IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
-
-        //Add AdInfo Interstitial Events
-        IronSourceInterstitialEvents.onAdReadyEvent += InterstitialOnAdReadyEvent;
-        IronSourceInterstitialEvents.onAdLoadFailedEvent += InterstitialOnAdLoadFailed;
-        IronSourceInterstitialEvents.onAdOpenedEvent += InterstitialOnAdOpenedEvent;
-        IronSourceInterstitialEvents.onAdClickedEvent += InterstitialOnAdClickedEvent;
-        IronSourceInterstitialEvents.onAdShowSucceededEvent += InterstitialOnAdShowSucceededEvent;
-        IronSourceInterstitialEvents.onAdShowFailedEvent += InterstitialOnAdShowFailedEvent;
-        IronSourceInterstitialEvents.onAdClosedEvent += InterstitialOnAdClosedEvent;
-
-        //Add AdInfo Banner Events
-        IronSourceBannerEvents.onAdLoadedEvent += BannerOnAdLoadedEvent;
-        IronSourceBannerEvents.onAdLoadFailedEvent += BannerOnAdLoadFailedEvent;
-        IronSourceBannerEvents.onAdClickedEvent += BannerOnAdClickedEvent;
-        IronSourceBannerEvents.onAdScreenPresentedEvent += BannerOnAdScreenPresentedEvent;
-        IronSourceBannerEvents.onAdScreenDismissedEvent += BannerOnAdScreenDismissedEvent;
-        IronSourceBannerEvents.onAdLeftApplicationEvent += BannerOnAdLeftApplicationEvent;
+            //Init AdQuality
+            ISAdQualityConfig adQualityConfig = new ISAdQualityConfig();
+            adQualityConfig.UserId = "MyUserId";
+            IronSourceAdQuality.Initialize(appKey, adQualityConfig);
 
 
-        Debug.Log("unity-script: unity version" + IronSource.unityVersion());
-        IronSource.Agent.init(appKey);
-        IronSource.Agent.loadInterstitial();
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+      
+            //Init IronSource SDK
+            IronSource.Agent.shouldTrackNetworkState(true);
+            string id = IronSource.Agent.getAdvertiserId();
+            Debug.Log("unity-script: IronSource.Agent.getAdvertiserId : " + id);
+
+            Debug.Log("unity-script: IronSource.Agent.validateIntegration");
+            IronSource.Agent.validateIntegration();
+            IronSourceEvents.onImpressionDataReadyEvent += ImpressionDataReadyEvent;
+            //Add AdInfo Rewarded Video Events
+            IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
+            IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
+            IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
+            IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
+            IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
+            IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
+            IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
+
+            //Add AdInfo Interstitial Events
+            IronSourceInterstitialEvents.onAdReadyEvent += InterstitialOnAdReadyEvent;
+            IronSourceInterstitialEvents.onAdLoadFailedEvent += InterstitialOnAdLoadFailed;
+            IronSourceInterstitialEvents.onAdOpenedEvent += InterstitialOnAdOpenedEvent;
+            IronSourceInterstitialEvents.onAdClickedEvent += InterstitialOnAdClickedEvent;
+            IronSourceInterstitialEvents.onAdShowSucceededEvent += InterstitialOnAdShowSucceededEvent;
+            IronSourceInterstitialEvents.onAdShowFailedEvent += InterstitialOnAdShowFailedEvent;
+            IronSourceInterstitialEvents.onAdClosedEvent += InterstitialOnAdClosedEvent;
+
+            //Add AdInfo Banner Events
+            IronSourceBannerEvents.onAdLoadedEvent += BannerOnAdLoadedEvent;
+            IronSourceBannerEvents.onAdLoadFailedEvent += BannerOnAdLoadFailedEvent;
+            IronSourceBannerEvents.onAdClickedEvent += BannerOnAdClickedEvent;
+            IronSourceBannerEvents.onAdScreenPresentedEvent += BannerOnAdScreenPresentedEvent;
+            IronSourceBannerEvents.onAdScreenDismissedEvent += BannerOnAdScreenDismissedEvent;
+            IronSourceBannerEvents.onAdLeftApplicationEvent += BannerOnAdLeftApplicationEvent;
 
 
-        Time.timeScale = 0;
+            Debug.Log("unity-script: unity version" + IronSource.unityVersion());
+
+            Debug.Log("初始化");
+            IronSource.Agent.init(appKey);
+            IronSource.Agent.loadInterstitial();
+            IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    private void ImpressionDataReadyEvent(IronSourceImpressionData impressionData) {
+    private void ImpressionDataReadyEvent(IronSourceImpressionData impressionData)
+    {
         Debug.Log("unity-script: ImpressionDataReadyEvent = " + impressionData.ToString());
     }
 
@@ -92,16 +100,28 @@ public class StartGameScript : MonoBehaviour
         IronSource.Agent.onApplicationPause(isPaused);
     }
 
-    public void ExitButtonClick() {
-        Application.Quit();
-    }
+    //点击Exit按钮
+    public void ExitButtonClick()
+    {
+        Debug.Log("点击Exit");
+        dialog.ShowMessage("Do you make sure to exit?");
+        dialog.SubscribeToConfirmButton( () => {
+              Application.Quit();
+        });
 
-    public void startGameButtonClicked() {
- 
+        dialog.SubscribeToCancelButton( () => {
+                dialog.HideMessage();
+        });
+       
+    }
+    //点击开始游戏按钮
+    public void startGameButtonClicked()
+    {
+
         startGame = true;
-        toast.Show("加载GameScene");
-        
-        if (playAdsVideo) {
+        // toast.Show("加载GameScene");
+        if (playAdsVideo)
+        {
             if (IronSource.Agent.isInterstitialReady())
             {
                 Debug.Log("全屏广告已加载");
@@ -112,15 +132,20 @@ public class StartGameScript : MonoBehaviour
                 Debug.Log("全屏广告暂时未准备好");
             }
         }
-        else {
+        else
+        {
             Debug.Log("加载GameScene");
             SceneManager.LoadScene("GameScene");
         }
-      
-      
     }
 
+    public void SelectLevelButtonClicked(){
+         Debug.Log("选择关卡");
+
+    }
     
+
+
     // RewardVideo Listener Event
 
     /************* RewardedVideo AdInfo Delegates *************/
