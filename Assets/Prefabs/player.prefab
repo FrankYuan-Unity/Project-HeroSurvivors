@@ -174,7 +174,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,7 +208,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &6758102689375464118
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -225,7 +225,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &6758102689375464117
 Rigidbody2D:
   serializedVersion: 4
@@ -260,10 +261,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angryPigPrefab: {fileID: 640959013884354844, guid: 89bad3fb505414b05a6325e71802dcce, type: 3}
-  l: 0
-  r: 13
-  t: 0
-  b: -8
+  guns: []
+  joystick: {fileID: 0}
+  blood: 1000
 --- !u!61 &6758102689375464123
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5290ecb2901744f11b3d2b48495a8a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transform: {fileID: 6758102689822526569}
   target: {fileID: 6758102689375464119}
+  shootJoystick: {fileID: 0}
   firePoint: {fileID: 6758102689612210234}
   bulletPrefab: {fileID: 1598072040638404173, guid: cd37fab634c3d4ac99d08a60c2c8c67e, type: 3}
