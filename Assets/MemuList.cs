@@ -30,7 +30,7 @@ public class MemuList : MonoBehaviour
     { //游戏暂停
         menuList.SetActive(true);
         menuKeys = false;
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
         Debug.Log("暂停游戏");
     }
 

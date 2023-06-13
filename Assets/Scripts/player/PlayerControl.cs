@@ -6,17 +6,48 @@ using Random = UnityEngine.Random;
 
 public class PlayerControl : MonoBehaviour
 {
+
+    [SerializeField] PlayerInput input;
     private Animator ani;
     private Rigidbody2D rb;
     public GameObject angryPigPrefab;
     public GameObject[] guns;
     private float createEnemyTime = 0.2f; //每两秒随机生成一次敌人
     private int gunIndex;
-    public FixedJoystick joystick; //摇杆
+    // public FixedJoystick joystix1ck; //摇杆
 
     public int blood = 1000; //血量
 
     Vector3 size;
+
+    private void OnEnable()
+    {
+        input.onMove += Move;
+        input.onStopMove += StopMove;
+    }
+
+    private void Move(Vector2 moveInput)
+    {
+        print("我移动了" + moveInput.ToString());
+        rb.velocity = moveInput * moveSpeed;
+
+        if (moveInput.x != 0)
+        {
+            ani.SetFloat("Horizontal", -1);
+            ani.SetFloat("Vertical", 0);
+        }
+        if (moveInput.y != 0)
+        {
+            ani.SetFloat("Vertical", moveInput.y);
+            ani.SetFloat("Horizontal", 0);
+        }
+    }
+
+    private void StopMove()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,57 +56,63 @@ public class PlayerControl : MonoBehaviour
         //获取组件
         ani = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        // rb.gravityScale = 0f;
+        input.EnableGameActionInput();
+
+        // movement.Enable();
+        // fire.Enable();
     }
-    // Update is called once per frame
+
+    public float moveSpeed = 5f;
+    public int health = 100;
+    public GameObject bulletPrefab;
+    public float fireRate = 0.2f;
+    private float nextFire;
+
+    private Vector2 direction;
+    // public InputActionAsset inputActions;
+    // public InputAction movement;
+    // public InputAction fire;
+
+
     void Update()
     {
 
-        if (StartGameScript.startGame)
+        // SwitchGun();
+
+        // 读取移动输入
+        // Vector2 directionInput = movement.ReadValue<Vector2>();
+        // direction = directionInput;
+
+        // 读取射击输入
+        // if (fire.triggered)
+        // {
+        //     Shoot();
+        // }
+
+        // 根据鼠标位置计算射击方向
+        // Vector2 mousePos = Mouse.current.position.ReadValue();
+        // mousePos.z = 0;
+        // Vector2 aimDir = Camera.main.ScreenToWorldPoint(mousePos) - rb.position;
+        // float aimAngle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
+        // transform.rotation = Quaternion.Euler(0, 0, aimAngle);
+    }
+
+    void Shoot()
+    {
+        // 实例化子弹
+        GameObject bullet = Instantiate(bulletPrefab, rb.position, transform.rotation);
+        bullet.GetComponent<Rigidbody2D>().velocity = transform.right * 6;
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        // 触碰敌人
+        if (coll.tag == "Enemy")
         {
-            SwitchGun();
-
-            //获取水平轴 -1 0 1
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            if (Util.isMobile())
-            {
-                Debug.Log("判断是否是移动端");
-
-                horizontal = getAnimParam(joystick.Horizontal);
-
-                vertical = getAnimParam(joystick.Vertical);
-            }
-            Debug.Log("horizontal = " + horizontal);
-            Debug.Log("vertical = " + vertical);
-
-            ////按下左或者右
-            if (horizontal != 0)
-            {
-                ani.SetFloat("Horizontal", -1);
-                ani.SetFloat("Vertical", 0);
-            }
-
-            //按下上或者下
-            if (vertical != 0)
-            {
-                ani.SetFloat("Vertical", vertical);
-                ani.SetFloat("Horizontal", 0);
-            }
-
-            //切换运动
-            Vector2 dir = new Vector2(horizontal, vertical);
-            Debug.Log("direction = " + dir.magnitude);
-            ani.SetFloat("Speed", dir.magnitude);
-
-            //朝该方向移动
-            rb.velocity = dir * 2f;
-
-            CreateEnemy();
-
-            //resetPosition(true);
-            //calculateDistance();
+            health -= 10;
+            Debug.Log(health);
         }
-
     }
     private float getAnimParam(float dir)
     {
@@ -112,14 +149,7 @@ public class PlayerControl : MonoBehaviour
 
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        //if (collision.gameObject.tag.Equals("Enemies"))
-        //{
-        //    speed = 0.5f;
-        //}
 
-    }
 
 
     public void CreateEnemy()

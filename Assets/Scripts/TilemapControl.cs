@@ -39,12 +39,12 @@ public class TilemapControl : MonoBehaviour
         if (mainCam.transform.position.y - transform.position.y > + map_height)
         {
             mapPosition.y += map_height * 2;
-            Debug.Log("3" + mapPosition.ToString());
+            // Debug.Log("3" + mapPosition.ToString());
         }
         else if (mainCam.transform.position.y - transform.position.y <  - map_height)
         {
             mapPosition.y -= map_height * 2;
-            Debug.Log("4" + mapPosition.ToString());
+            // Debug.Log("4" + mapPosition.ToString());
         }
 
         transform.position = mapPosition;

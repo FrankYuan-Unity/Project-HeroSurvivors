@@ -34,12 +34,12 @@ public class WeaponScript : MonoBehaviour
 
         if (transform.name.Equals("Gun001"))
         {
-            Debug.Log("手枪开枪");
+            // Debug.Log("手枪开枪");
             Shoot();
         }
         else if (transform.name.Equals("Gun002"))
         {
-            Debug.Log("冲锋枪开枪");
+            // Debug.Log("冲锋枪开枪");
             GatlingShoot();
         }
 
@@ -68,29 +68,29 @@ public class WeaponScript : MonoBehaviour
 
     private void RotateGun()
     {
-#if UNITY_ANDROID  
-         Vector2 dir  = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
+// #if UNITY_ANDROID  
+//          Vector2 dir  = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
      
-          transform.right = dir.normalized;
+//           transform.right = dir.normalized;
           
 
-        if (dir.x < 0) {
-            transform.localScale = new Vector3(flipY, -flipY, 1);
-        }
-        else {
-            transform.localScale = new Vector3(flipY, flipY, 1);
-        }
+//         if (dir.x < 0) {
+//             transform.localScale = new Vector3(flipY, -flipY, 1);
+//         }
+//         else {
+//             transform.localScale = new Vector3(flipY, flipY, 1);
+//         }
 
-#else
-          direction = (mousePos - new Vector2(transform.position.x - 0.2f, transform.position.y + 0.3f)).normalized;
-          transform.right = direction;
-           if(mousePos.x < transform.position.x) {
-            transform.localScale = new Vector3(flipY, -flipY, 1);	
-          }
-           else {
-            transform.localScale = new Vector3(flipY, flipY, 1); 
-          }
-	#endif
+// #else
+//           direction = (mousePos - new Vector2(transform.position.x - 0.2f, transform.position.y + 0.3f)).normalized;
+//           transform.right = direction;
+//            if(mousePos.x < transform.position.x) {
+//             transform.localScale = new Vector3(flipY, -flipY, 1);	
+//           }
+//            else {
+//             transform.localScale = new Vector3(flipY, flipY, 1); 
+//           }
+// 	#endif
 
     }
     
