@@ -28,12 +28,11 @@ public class PlayerControl : MonoBehaviour
 
     private void Move(Vector2 moveInput)
     {
-        print("我移动了" + moveInput.ToString());
         rb.velocity = moveInput * moveSpeed;
 
         if (moveInput.x != 0)
         {
-            ani.SetFloat("Horizontal", -1);
+            ani.SetFloat("Horizontal", moveInput.x);
             ani.SetFloat("Vertical", 0);
         }
         if (moveInput.y != 0)
@@ -41,11 +40,15 @@ public class PlayerControl : MonoBehaviour
             ani.SetFloat("Vertical", moveInput.y);
             ani.SetFloat("Horizontal", 0);
         }
+        ani.SetFloat("Speed", moveInput.magnitude);
+
+
     }
 
     private void StopMove()
     {
         rb.velocity = Vector2.zero;
+        ani.SetFloat("Speed",0);
     }
 
     // Start is called before the first frame update
