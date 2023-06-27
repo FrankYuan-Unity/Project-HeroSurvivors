@@ -1,14 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
+    [SerializeField] PlayerInput input;
 
     public Transform target;
     public FixedJoystick shootJoystick;
-    
+
     public Transform firePoint;
 
     private float curRotateAngle = 180f;
@@ -23,14 +21,17 @@ public class WeaponScript : MonoBehaviour
     private void Start()
     {
         flipY = transform.localScale.y;
+        input.onRotateGun += RotateGun;
     }
+
+
 
 
     // Update is called once per frame
     void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RotateGun();
+
 
         if (transform.name.Equals("Gun001"))
         {
@@ -45,12 +46,7 @@ public class WeaponScript : MonoBehaviour
 
     }
 
-    void rotateGun(float angle)
-    {
-        //transform.Rotate(angle, angle, 0);
-        //transform.RotateAround(target.position + Vector3.up * 0.35f, Vector3.back, angle);
-        //curRotateAngle = curRotateAngle + 180;
-    }
+
 
     const float gatlingSpeed = 0.1f;
     private float gatlingTime = gatlingSpeed;
@@ -66,36 +62,29 @@ public class WeaponScript : MonoBehaviour
 
     }
 
-    private void RotateGun()
+    private void RotateGun(Vector2 dir)
     {
-// #if UNITY_ANDROID  
-//          Vector2 dir  = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
-     
-//           transform.right = dir.normalized;
-          
 
-//         if (dir.x < 0) {
-//             transform.localScale = new Vector3(flipY, -flipY, 1);
-//         }
-//         else {
-//             transform.localScale = new Vector3(flipY, flipY, 1);
-//         }
+        print(dir.ToString());
 
-// #else
-//           direction = (mousePos - new Vector2(transform.position.x - 0.2f, transform.position.y + 0.3f)).normalized;
-//           transform.right = direction;
-//            if(mousePos.x < transform.position.x) {
-//             transform.localScale = new Vector3(flipY, -flipY, 1);	
-//           }
-//            else {
-//             transform.localScale = new Vector3(flipY, flipY, 1); 
-//           }
-// 	#endif
 
+        print(dir.ToString());
+        //  Vector2 dir  = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
+
+        transform.right = dir.normalized;
+
+        if (dir.x < 0)
+        {
+            transform.localScale = new Vector3(flipY, -flipY, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(flipY, flipY, 1);
+        }
     }
-    
+
     private void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
     }
 }

@@ -169,6 +169,45 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "WeaponActions",
+            "id": "e1cc9773-deb8-4be2-b93e-0137e5ea09ec",
+            "actions": [
+                {
+                    "name": "RotateGun",
+                    "type": "Value",
+                    "id": "c9f2eb34-dbb1-4bba-b533-c0926ac4755c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dd56e4b4-d791-486e-8667-dfb0968dc6e0",
+                    "path": "<AndroidJoystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8542a36d-e61b-476f-a457-3699073f60d1",
+                    "path": "<Mouse>/radius",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

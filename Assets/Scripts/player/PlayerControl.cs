@@ -68,9 +68,6 @@ public class PlayerControl : MonoBehaviour
 
     public float moveSpeed = 5f;
     public int health = 100;
-    public GameObject bulletPrefab;
-    public float fireRate = 0.2f;
-    private float nextFire;
 
     private Vector2 direction;
     // public InputActionAsset inputActions;
@@ -80,33 +77,8 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-
-        // SwitchGun();
-
-        // 读取移动输入
-        // Vector2 directionInput = movement.ReadValue<Vector2>();
-        // direction = directionInput;
-
-        // 读取射击输入
-        // if (fire.triggered)
-        // {
-        //     Shoot();
-        // }
-
-        // 根据鼠标位置计算射击方向
-        // Vector2 mousePos = Mouse.current.position.ReadValue();
-        // mousePos.z = 0;
-        // Vector2 aimDir = Camera.main.ScreenToWorldPoint(mousePos) - rb.position;
-        // float aimAngle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
-        // transform.rotation = Quaternion.Euler(0, 0, aimAngle);
     }
-
-    void Shoot()
-    {
-        // 实例化子弹
-        GameObject bullet = Instantiate(bulletPrefab, rb.position, transform.rotation);
-        bullet.GetComponent<Rigidbody2D>().velocity = transform.right * 6;
-    }
+ 
 
     void OnTriggerEnter2D(Collider2D coll)
     {
