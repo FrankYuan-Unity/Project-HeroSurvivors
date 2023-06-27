@@ -14,9 +14,11 @@ public class PlayerControl : MonoBehaviour
     public GameObject[] guns;
     private float createEnemyTime = 0.2f; //每两秒随机生成一次敌人
     private int gunIndex;
-    // public FixedJoystick joystix1ck; //摇杆
+    public FixedJoystick joystick; //摇杆
 
     public int blood = 1000; //血量
+
+    public float fireTime = 1f; //初始每秒钟打出一发子弹，增加射速后此参数减小
 
     Vector3 size;
 
@@ -24,6 +26,21 @@ public class PlayerControl : MonoBehaviour
     {
         input.onMove += Move;
         input.onStopMove += StopMove;
+        Debug.Log("movedirection");
+
+    }
+
+    private void Update()
+    {
+
+        CreateEnemy();
+        if (Util.isMobile())
+        {
+
+            Vector2 movePos = new Vector2(joystick.Horizontal, joystick.Vertical);
+            Debug.Log("movedirection" + movePos.ToString());
+            Move(movePos);
+        }
     }
 
     private void Move(Vector2 moveInput)
@@ -48,7 +65,7 @@ public class PlayerControl : MonoBehaviour
     private void StopMove()
     {
         rb.velocity = Vector2.zero;
-        ani.SetFloat("Speed",0);
+        ani.SetFloat("Speed", 0);
     }
 
     // Start is called before the first frame update
@@ -74,11 +91,6 @@ public class PlayerControl : MonoBehaviour
     // public InputAction movement;
     // public InputAction fire;
 
-
-    void Update()
-    {
-    }
- 
 
     void OnTriggerEnter2D(Collider2D coll)
     {

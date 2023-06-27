@@ -12,11 +12,11 @@ public class BulletScript : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.right * speed;
+    //     // rb = GetComponent<Rigidbody2D>();
+        // rb.velocity = Vector2.right * speed;
 
         // 设置子弹寿命
-        Destroy(gameObject, lifeTime);
+        // Destroy(gameObject, lifeTime);
     }
 
     private void Update()

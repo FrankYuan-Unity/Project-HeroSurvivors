@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -58,6 +59,7 @@ public class PlayerInput : ScriptableObject, GamePlayerActions.IPlayerActionsAct
     public void OnRotateGun(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Performed){
+            Debug.Log("rotate performed");
             onRotateGun.Invoke(context.ReadValue<Vector2>());
         }
 

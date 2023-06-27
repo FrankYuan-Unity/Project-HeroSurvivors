@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+
 public class WeaponScript : MonoBehaviour
 {
     [SerializeField] PlayerInput input;
@@ -30,8 +32,18 @@ public class WeaponScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // if (Mouse.current.leftButton.wasPressedThisFrame)
+        // {
+        //     mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
+        //     //     print(mousePos.ToString());
+        // }
+
+
+        if (Util.isMobile())
+        {
+            DetectMobileGunRotate();
+        }
 
         if (transform.name.Equals("Gun001"))
         {
@@ -48,7 +60,7 @@ public class WeaponScript : MonoBehaviour
 
 
 
-    const float gatlingSpeed = 0.1f;
+    const float gatlingSpeed = 0.5f;
     private float gatlingTime = gatlingSpeed;
 
     private void GatlingShoot()
@@ -62,14 +74,29 @@ public class WeaponScript : MonoBehaviour
 
     }
 
+    private void DetectMobileGunRotate()
+    {
+        Vector2 dir = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
+
+        transform.right = dir.normalized;
+        direction = dir;
+
+
+        if (dir.x < 0)
+        {
+            transform.localScale = new Vector3(flipY, -flipY, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(flipY, flipY, 1);
+        }
+    }
+
     private void RotateGun(Vector2 dir)
     {
 
-        print(dir.ToString());
-
-
-        print(dir.ToString());
-        //  Vector2 dir  = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
+        print("rotate" + dir.ToString());
+        //  Vector2 dir2  = Vector2.up * shootJoystick.Vertical + Vector2.right * shootJoystick.Horizontal;
 
         transform.right = dir.normalized;
 
@@ -83,8 +110,11 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
+    // private Vector2 preMousePos = Vector2.zero;
     private void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Instantiate(bulletPrefab, firePoint.position, Quaternion.AngleAxis(angle, Vector3.forward));
     }
 }
