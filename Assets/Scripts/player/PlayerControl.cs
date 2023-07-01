@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -34,17 +32,18 @@ public class PlayerControl : MonoBehaviour
     {
 
         CreateEnemy();
-        if (Util.isMobile())
-        {
+        // if (Util.isMobile())
+        // {
 
-            Vector2 movePos = new Vector2(joystick.Horizontal, joystick.Vertical);
-            Debug.Log("movedirection" + movePos.ToString());
-            Move(movePos);
-        }
+        //     Vector2 movePos = new Vector2(joystick.Horizontal, joystick.Vertical);
+        //     Debug.Log("movedirection" + movePos.ToString());
+        //     Move(movePos);
+        // }
     }
 
     private void Move(Vector2 moveInput)
     {
+        print(moveInput.ToString());
         rb.velocity = moveInput * moveSpeed;
 
         if (moveInput.x != 0)
@@ -58,8 +57,6 @@ public class PlayerControl : MonoBehaviour
             ani.SetFloat("Horizontal", 0);
         }
         ani.SetFloat("Speed", moveInput.magnitude);
-
-
     }
 
     private void StopMove()

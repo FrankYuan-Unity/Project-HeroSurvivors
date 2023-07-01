@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6203263715061952449}
   - component: {fileID: 6203263715061952448}
+  - component: {fileID: 832219609701380125}
   m_Layer: 5
-  m_Name: Player Projectile
+  m_Name: Player Projectile2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +49,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   moveDirection: {x: 1, y: 0}
+--- !u!114 &832219609701380125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203263715061952462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3686e4efe4a4fee921e58031d2256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyGameOj: 0
+  lifeTime: 3
 --- !u!1 &6203263715868258059
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +104,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6203263715868258059}
   serializedVersion: 8
-  lengthInSec: 0.5
+  lengthInSec: 0.3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4943,7 +4958,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.1
+        value: 0.08
         inSlope: 0
         outSlope: 0
         tangentMode: 0

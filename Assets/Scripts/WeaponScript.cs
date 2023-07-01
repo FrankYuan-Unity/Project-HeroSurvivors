@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 using UnityEngine.InputSystem;
@@ -9,24 +10,31 @@ public class WeaponScript : MonoBehaviour
     public Transform target;
     public FixedJoystick shootJoystick;
 
-    public Transform firePoint;
+    [SerializeField] public Transform firePointTop;
+    [SerializeField] public Transform firePointMid;
+    [SerializeField] public Transform firePointBottom;
 
     private float curRotateAngle = 180f;
 
-    public GameObject bulletPrefab;
+    [SerializeField] public GameObject bulletPrefab1;
+    [SerializeField] public GameObject bulletPrefab2;
+    [SerializeField] public GameObject bulletPrefab3;
+
+    [SerializeField, Range(0, 2)] int weaponPower = 0;
+
 
     private Vector2 mousePos; //鼠标位置
     private Vector2 direction; //朝向
 
     private float flipY;
-
+    const float fireInterval = 0.5f;
+    private WaitForSeconds waitForSeconds;
     private void Start()
     {
         flipY = transform.localScale.y;
         input.onRotateGun += RotateGun;
+        waitForSeconds = new WaitForSeconds(fireInterval);
     }
-
-
 
 
     // Update is called once per frame
@@ -48,7 +56,7 @@ public class WeaponScript : MonoBehaviour
         if (transform.name.Equals("Gun001"))
         {
             // Debug.Log("手枪开枪");
-            Shoot();
+            StartCoroutine(nameof(Fire));
         }
         else if (transform.name.Equals("Gun002"))
         {
@@ -58,20 +66,17 @@ public class WeaponScript : MonoBehaviour
 
     }
 
-
-
-    const float gatlingSpeed = 0.5f;
-    private float gatlingTime = gatlingSpeed;
-
+    private float fireTime = fireInterval;
     private void GatlingShoot()
     {
-        gatlingTime -= Time.deltaTime;
-        if (gatlingTime <= 0)
+        fireTime -= Time.deltaTime;
+        if (fireTime <= 0)
         {
-            Shoot();
-            gatlingTime = gatlingSpeed;
-        }
+            fireTime = fireInterval;
 
+            StartCoroutine(nameof(Fire));
+            StopCoroutine(nameof(Fire));
+        }
     }
 
     private void DetectMobileGunRotate()
@@ -110,11 +115,35 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
-    // private Vector2 preMousePos = Vector2.zero;
-    private void Shoot()
-    {
 
-        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Instantiate(bulletPrefab, firePoint.position, Quaternion.AngleAxis(angle, Vector3.forward));
+    IEnumerator Fire()
+    {
+        while (true)
+        {
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            switch (weaponPower)
+            {
+                case 0:
+                    PoolManage.Release(bulletPrefab2, firePointMid.position);
+                    break;
+                case 1:
+                    PoolManage.Release(bulletPrefab1, firePointTop.position);
+                    PoolManage.Release(bulletPrefab3, firePointMid.position);
+
+                    break;
+                case 2:
+                    PoolManage.Release(bulletPrefab1, firePointTop.position);
+                    PoolManage.Release(bulletPrefab2, firePointMid.position);
+                    PoolManage.Release(bulletPrefab3, firePointBottom.position);
+                    break;
+                default:
+                    PoolManage.Release(bulletPrefab2, firePointMid.position);
+                    break;
+
+            }
+            yield return waitForSeconds;
+        }
     }
+
 }

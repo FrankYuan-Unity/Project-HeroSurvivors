@@ -4,12 +4,11 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "PlayerInput", menuName = "Player Input", order = 0)]
-public class PlayerInput : ScriptableObject, GamePlayerActions.IPlayerActionsActions, GamePlayerActions.IWeaponActionsActions
+public class PlayerInput : ScriptableObject, GamePlayerActions.IPlayerActionsActions
 {
 
     public event UnityAction<Vector2> onMove = delegate { };
     public event UnityAction<Vector2> onRotateGun = delegate { };
-
     public event UnityAction onStopMove = delegate { };
     GamePlayerActions gameActions;
 

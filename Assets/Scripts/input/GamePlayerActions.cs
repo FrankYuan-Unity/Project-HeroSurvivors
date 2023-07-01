@@ -44,6 +44,15 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RotateGun"",
+                    ""type"": ""Value"",
+                    ""id"": ""b311758d-40f4-410b-b117-3577c0774f77"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -55,28 +64,6 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""78ee2f13-a77f-481e-9ff4-1e1b6bc782f9"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""824ccaaf-5952-47f6-988f-2011f6f6019c"",
-                    ""path"": ""<Gamepad>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -192,35 +179,7 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0d0fe16d-c008-4fde-93c6-7edfe940006e"",
-                    ""path"": ""<AndroidJoystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""WeaponActions"",
-            ""id"": ""e1cc9773-deb8-4be2-b93e-0137e5ea09ec"",
-            ""actions"": [
-                {
-                    ""name"": ""RotateGun"",
-                    ""type"": ""Value"",
-                    ""id"": ""c9f2eb34-dbb1-4bba-b533-c0926ac4755c"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""dd56e4b4-d791-486e-8667-dfb0968dc6e0"",
+                    ""id"": ""6c1488a0-23d5-4f9c-b21c-1f06d22fe545"",
                     ""path"": ""<AndroidJoystick>/stick"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -231,7 +190,7 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0f07e2df-5431-4708-b83c-778b2737cd11"",
+                    ""id"": ""2125fa7c-2ff3-48db-bc41-616f16246b56"",
                     ""path"": ""<Mouse>/radius"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -249,9 +208,7 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_fire = m_PlayerActions.FindAction("fire", throwIfNotFound: true);
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
-        // WeaponActions
-        m_WeaponActions = asset.FindActionMap("WeaponActions", throwIfNotFound: true);
-        m_WeaponActions_RotateGun = m_WeaponActions.FindAction("RotateGun", throwIfNotFound: true);
+        m_PlayerActions_RotateGun = m_PlayerActions.FindAction("RotateGun", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -315,12 +272,14 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_fire;
     private readonly InputAction m_PlayerActions_Move;
+    private readonly InputAction m_PlayerActions_RotateGun;
     public struct PlayerActionsActions
     {
         private @GamePlayerActions m_Wrapper;
         public PlayerActionsActions(@GamePlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @fire => m_Wrapper.m_PlayerActions_fire;
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
+        public InputAction @RotateGun => m_Wrapper.m_PlayerActions_RotateGun;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -336,6 +295,9 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @RotateGun.started += instance.OnRotateGun;
+            @RotateGun.performed += instance.OnRotateGun;
+            @RotateGun.canceled += instance.OnRotateGun;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -346,6 +308,9 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @RotateGun.started -= instance.OnRotateGun;
+            @RotateGun.performed -= instance.OnRotateGun;
+            @RotateGun.canceled -= instance.OnRotateGun;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -363,59 +328,10 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
-
-    // WeaponActions
-    private readonly InputActionMap m_WeaponActions;
-    private List<IWeaponActionsActions> m_WeaponActionsActionsCallbackInterfaces = new List<IWeaponActionsActions>();
-    private readonly InputAction m_WeaponActions_RotateGun;
-    public struct WeaponActionsActions
-    {
-        private @GamePlayerActions m_Wrapper;
-        public WeaponActionsActions(@GamePlayerActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RotateGun => m_Wrapper.m_WeaponActions_RotateGun;
-        public InputActionMap Get() { return m_Wrapper.m_WeaponActions; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(WeaponActionsActions set) { return set.Get(); }
-        public void AddCallbacks(IWeaponActionsActions instance)
-        {
-            if (instance == null || m_Wrapper.m_WeaponActionsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_WeaponActionsActionsCallbackInterfaces.Add(instance);
-            @RotateGun.started += instance.OnRotateGun;
-            @RotateGun.performed += instance.OnRotateGun;
-            @RotateGun.canceled += instance.OnRotateGun;
-        }
-
-        private void UnregisterCallbacks(IWeaponActionsActions instance)
-        {
-            @RotateGun.started -= instance.OnRotateGun;
-            @RotateGun.performed -= instance.OnRotateGun;
-            @RotateGun.canceled -= instance.OnRotateGun;
-        }
-
-        public void RemoveCallbacks(IWeaponActionsActions instance)
-        {
-            if (m_Wrapper.m_WeaponActionsActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IWeaponActionsActions instance)
-        {
-            foreach (var item in m_Wrapper.m_WeaponActionsActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_WeaponActionsActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public WeaponActionsActions @WeaponActions => new WeaponActionsActions(this);
     public interface IPlayerActionsActions
     {
         void OnFire(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-    }
-    public interface IWeaponActionsActions
-    {
         void OnRotateGun(InputAction.CallbackContext context);
     }
 }
