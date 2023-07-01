@@ -38,8 +38,8 @@ public class MemuList : MonoBehaviour
     {
         //如果角色死亡，则复活，否则返回游戏
         PlayerControl player = GameObject.Find("player").GetComponent<PlayerControl>();
-        Debug.Log("blood -- " + player.blood);
-        if (player.blood > 0)
+        Debug.Log("blood -- " + player.health);
+        if (player.health > 0)
         {  //仍然存活
             menuList.SetActive(false);
             menuKeys = true;

@@ -125,20 +125,20 @@ public class WeaponScript : MonoBehaviour
             switch (weaponPower)
             {
                 case 0:
-                    PoolManage.Release(bulletPrefab2, firePointMid.position);
+                    PoolManage.Release(bulletPrefab2, firePointMid.position, Quaternion.AngleAxis(angle, Vector3.forward));
                     break;
                 case 1:
-                    PoolManage.Release(bulletPrefab1, firePointTop.position);
-                    PoolManage.Release(bulletPrefab3, firePointMid.position);
+                    PoolManage.Release(bulletPrefab1, firePointTop.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                    PoolManage.Release(bulletPrefab3, firePointMid.position, Quaternion.AngleAxis(angle, Vector3.forward));
 
                     break;
                 case 2:
-                    PoolManage.Release(bulletPrefab1, firePointTop.position);
-                    PoolManage.Release(bulletPrefab2, firePointMid.position);
-                    PoolManage.Release(bulletPrefab3, firePointBottom.position);
+                    PoolManage.Release(bulletPrefab1, firePointTop.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                    PoolManage.Release(bulletPrefab2, firePointMid.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                    PoolManage.Release(bulletPrefab3, firePointBottom.position, Quaternion.AngleAxis(angle, Vector3.forward));
                     break;
                 default:
-                    PoolManage.Release(bulletPrefab2, firePointMid.position);
+                    PoolManage.Release(bulletPrefab2, firePointMid.position, Quaternion.AngleAxis(angle, Vector3.forward));
                     break;
 
             }
