@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class PlayerProjectile : Projectile
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+ 
 
-    // Update is called once per frame
-    void Update()
+  void OnCollisionEnter2D(Collision2D other)
     {
-        
+        Debug.Log("bullet has been triggered");
+
+        if (other.gameObject.TryGetComponent<Character>(out Character character))
+        {
+            character.TakeDamage(damage);
+            var contactPoint = other.GetContact(0);
+            PoolManage.Release(hitVFX, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
+            gameObject.SetActive(false);
+        }
+
     }
 }

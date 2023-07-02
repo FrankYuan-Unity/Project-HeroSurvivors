@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     // [SerializeField] AudioData[] deathSFX;
 
     [Header("---- HEALTH ----")]
-    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float maxHealth = 100;
     [SerializeField] bool showOnHeadHealthBar = true;
     // [SerializeField] StatsBar onHeadHealthBar;
 
