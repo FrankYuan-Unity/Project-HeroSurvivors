@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1282041126}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: FirePoint002 Mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1672266587}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: FirePoint002 Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,13 +73,13 @@ GameObject:
   - component: {fileID: 3331759129743585276}
   - component: {fileID: 4063367901898291613}
   - component: {fileID: 693614235}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3331759129743585276
 Transform:
   m_ObjectHideFlags: 0
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1212089482215345054}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: FirePoint002 Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 6758102689375464117}
   - component: {fileID: 6758102689375464116}
   - component: {fileID: 6758102689375464123}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -347,16 +347,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874231afcaf8e47b5943b81c4a62335d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathVFX: {fileID: 0}
+  maxHealth: 0
+  showOnHeadHealthBar: 1
+  health: 100
+  Damage: 8
   input: {fileID: 11400000, guid: e09c27dfa62664fab9745cf9b775d92d, type: 2}
   angryPigPrefab: {fileID: 640959013884354844, guid: 89bad3fb505414b05a6325e71802dcce, type: 3}
   guns:
   - {fileID: 6758102689822526570}
   - {fileID: 1184640391317483860}
   joystick: {fileID: 0}
-  blood: 0
   fireTime: 1
   moveSpeed: 5
-  health: 100
 --- !u!61 &6758102689375464123
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -367,7 +370,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0040275455, y: 0.21402754}
@@ -392,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6758102689612210234}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6758102689822526569}
   - component: {fileID: 6758102689822526568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

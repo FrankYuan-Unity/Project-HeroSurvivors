@@ -2025,6 +2025,16 @@ MonoBehaviour:
     prefab: {fileID: 6203263715061952462, guid: 88b61b85fe72244aa8bd58761a25473d, type: 3}
   - size: 10
     prefab: {fileID: 6203263715061952462, guid: 4eda03f3b6b5c430eab252c62c3ab72b, type: 3}
+  vFXPools:
+  - size: 1
+    prefab: {fileID: 1587261729604890, guid: 600ec83cba1cec448bf41a6607229741, type: 3}
+  - size: 30
+    prefab: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
+  - size: 6
+    prefab: {fileID: 5060298685065931927, guid: 6775c68a79b34db4fa2fd4db2a4cdf74, type: 3}
+  enemyPools:
+  - size: 20
+    prefab: {fileID: 640959013884354844, guid: 89bad3fb505414b05a6325e71802dcce, type: 3}
 --- !u!4 &681623957
 Transform:
   m_ObjectHideFlags: 0
@@ -6746,7 +6756,7 @@ Transform:
   - {fileID: 649598102}
   - {fileID: 1423263051}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1516238318
 GameObject:
@@ -7056,12 +7066,16 @@ PrefabInstance:
       value: player
       objectReference: {fileID: 0}
     - target: {fileID: 6758102689375464116, guid: 1155562fe3ac24ce4bf67f878dd779bd, type: 3}
+      propertyPath: deathVFX
+      value: 
+      objectReference: {fileID: 1587261729604890, guid: 600ec83cba1cec448bf41a6607229741, type: 3}
+    - target: {fileID: 6758102689375464116, guid: 1155562fe3ac24ce4bf67f878dd779bd, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 1281891848}
     - target: {fileID: 6758102689375464119, guid: 1155562fe3ac24ce4bf67f878dd779bd, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6758102689375464119, guid: 1155562fe3ac24ce4bf67f878dd779bd, type: 3}
       propertyPath: m_LocalPosition.x

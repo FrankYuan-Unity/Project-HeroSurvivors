@@ -1,32 +1,67 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
+using System.Collections;
 
-public class EnemiesControl : MonoBehaviour
+public class EnemiesControl : Character
 {
-    private float speed = 0.5f;
-    public GameObject target;
-    private Rigidbody2D rb;
+    [SerializeField] float speed = 1f;
+    GameObject target;
+    private int blood = 70;
+    public int damage = 200;
 
-    private int blood = 70; 
-    public int damage = 200; 
-    
     private Vector3 scaleV;
-    // Start is called before the first frame update
-    void Start()
+
+    // float paddingX, paddingY;
+
+    Rigidbody2D rb;
+
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+    protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        target = GameObject.Find("player");
+        // var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+        // paddingX = size.x / 2f;
+        // paddingY = size.y / 2f;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        if(target == null) {
+        base.OnEnable();
+        rb = GetComponent<Rigidbody2D>();
+        // StartCoroutine(MoveBehavior());
+        target = GameObject.FindGameObjectWithTag("Player");
+    }
+    void OnDisable()
+    {
+        // StopAllCoroutines();
+    }
+
+    // IEnumerator MoveBehavior()
+    // {
+    //     while (gameObject.activeSelf)
+    //     {
+    //         Vector3 v3 = target.transform.position - transform.position;
+    //         scaleV = transform.localScale;
+    //         if (v3.x > 0)
+    //         {
+    //             scaleV.x = -1.75f;
+    //             transform.localScale = scaleV;
+    //         }
+    //         else
+    //         {
+    //             scaleV.x = 1.75f;
+    //             transform.localScale = scaleV;
+    //         }
+
+    //         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.fixedDeltaTime);
+
+    //         yield return waitForFixedUpdate;
+    //     }
+    // }
+
+
+    private void Update()
+    {
+        if (target == null)
             return;
-        }
         Vector3 v3 = target.transform.position - transform.position;
         scaleV = transform.localScale;
         if (v3.x > 0)
@@ -42,30 +77,17 @@ public class EnemiesControl : MonoBehaviour
         rb.velocity = Vector3.Normalize(v3) * speed;
     }
 
-    public void TakeDamage(int damage)
-    {
-        blood -= damage;
-
-        if (blood <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("collision has been triggered");
         if (collision.gameObject.tag.Equals("Player"))
         {
-            speed = 0;
+            bool canDamage = collision.gameObject.TryGetComponent<Character>(out Character character);
+            if (canDamage)
+                character.TakeDamage(damage);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            speed = 0.5f;
-        }
-    }
 }
 

@@ -73,9 +73,6 @@ public class PlayerControl : Character
         rb = GetComponent<Rigidbody2D>();
         // rb.gravityScale = 0f;
         input.EnableGameActionInput();
-
-        // movement.Enable();
-        // fire.Enable();
     }
 
     public float moveSpeed = 5f;
@@ -86,33 +83,11 @@ public class PlayerControl : Character
     // public InputAction fire;
 
 
-    void OnTriggerEnter2D(Collider2D coll)
-    {
-        // 触碰敌人
-        if (coll.tag == "Enemy")
-        {
-            health -= 10;
-            Debug.Log(health);
-        }
-    }
     private float getAnimParam(float dir)
     {
         float res = (float)(dir > 0 ? Math.Ceiling(dir) : Math.Floor(dir));
         Debug.Log("calculateResult = " + res);
         return res;
-    }
-
-
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Enemies"))
-        {
-            EnemiesControl enemies = collision.gameObject.GetComponent<EnemiesControl>();
-            if (enemies != null)
-                TakeDamage(enemies.damage);
-        }
     }
 
 
@@ -124,7 +99,8 @@ public class PlayerControl : Character
         {
             createEnemyTime = 2f;
 
-            Instantiate(angryPigPrefab, new Vector3(Random.Range(original.x + size.x / 2, original.x - size.x / 2), Random.Range(original.y + size.y / 2, original.y - size.y / 2), 0), Quaternion.identity);
+            PoolManage.Release(angryPigPrefab, new Vector3(Random.Range(original.x + size.x / 2, original.x - size.x / 2),
+             Random.Range(original.y + size.y / 2, original.y - size.y / 2), 0), Quaternion.identity);
         }
     }
 
@@ -133,13 +109,11 @@ public class PlayerControl : Character
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-
             SetGunIndexActive(0);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-
             SetGunIndexActive(1);
         }
 

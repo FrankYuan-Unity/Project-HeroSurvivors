@@ -12,7 +12,9 @@ public class Character : MonoBehaviour
     [SerializeField] bool showOnHeadHealthBar = true;
     // [SerializeField] StatsBar onHeadHealthBar;
 
-    public float health;
+    public float health =100;
+
+    [SerializeField] public float Damage = 1f;
 
     protected virtual void OnEnable()
     {
@@ -45,6 +47,7 @@ public class Character : MonoBehaviour
 
         health -= damage;
 
+        Debug.Log("Take damage : " + damage + "gameobject name is :" + name);
         if (showOnHeadHealthBar)
         {
             // onHeadHealthBar.UpdateStats(health, maxHealth);
@@ -60,7 +63,7 @@ public class Character : MonoBehaviour
     {
         health = 0f;
         // AudioManager.Instance.PlayRandomSFX(deathSFX);
-        // PoolManager.Release(deathVFX, transform.position);
+        PoolManage.Release(deathVFX, transform.position);
         gameObject.SetActive(false);
     }
 

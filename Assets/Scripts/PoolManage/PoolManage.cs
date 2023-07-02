@@ -5,13 +5,19 @@ using UnityEngine;
 public class PoolManage : MonoBehaviour
 {
 
-    static Dictionary<GameObject, Pool> poolDictionary = new Dictionary<GameObject, Pool>();
+    static Dictionary<GameObject, Pool> poolDictionary;
     [SerializeField] public Pool[] poolParticles;
+    [SerializeField] public Pool[] vFXPools;
 
+    [SerializeField] public Pool[] enemyPools;
 
     void Start()
     {
+        poolDictionary = new Dictionary<GameObject, Pool>();
+    
         Initialize(poolParticles);
+        Initialize(vFXPools);
+        Initialize(enemyPools);
     }
 
     void CheckPoolSize(Pool[] pools)
@@ -32,6 +38,8 @@ public class PoolManage : MonoBehaviour
     private void OnDestroy()
     {
         CheckPoolSize(poolParticles);
+        CheckPoolSize(vFXPools);
+        CheckPoolSize(enemyPools);
     }
 
 #endif
