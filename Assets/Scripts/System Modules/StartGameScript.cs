@@ -1,31 +1,29 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class StartGameScript : MonoBehaviour
 {
     public static bool playAdsVideo = false;
-    public static bool startGame = false;
-    
+
     private PopupDialog dialog;
 
     public GameObject dialogPreb;
 
-    private void Awake()
-    {
-
-    }
+    public static event UnityAction OnRewardVideoRewarded = delegate { };
+    public static event UnityAction OnInterstitialClosed = delegate { };
 
     // Start is called before the first frame update
     void Start()
     {
         ISAdQualityConfig config = new ISAdQualityConfig();
-         
+
         dialog = dialogPreb.GetComponent<PopupDialog>();
 
         if (playAdsVideo)
         {
 #if UNITY_ANDROID
-        string appKey = "1a1d6ffcd";
+            string appKey = "8545d445";
 #elif UNITY_IPHONE
         string appKey = "8545d445";
 #else
@@ -38,7 +36,7 @@ public class StartGameScript : MonoBehaviour
 
 
 
-      
+
             //Init IronSource SDK
             IronSource.Agent.shouldTrackNetworkState(true);
             string id = IronSource.Agent.getAdvertiserId();
@@ -73,7 +71,7 @@ public class StartGameScript : MonoBehaviour
             IronSourceBannerEvents.onAdScreenDismissedEvent += BannerOnAdScreenDismissedEvent;
             IronSourceBannerEvents.onAdLeftApplicationEvent += BannerOnAdLeftApplicationEvent;
 
-
+            OnInterstitialClosed += InterstitialClosed;
             Debug.Log("unity-script: unity version" + IronSource.unityVersion());
 
             Debug.Log("初始化");
@@ -83,10 +81,9 @@ public class StartGameScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InterstitialClosed()
     {
-
+        SceneManager.LoadScene(1);
     }
 
     private void ImpressionDataReadyEvent(IronSourceImpressionData impressionData)
@@ -106,20 +103,20 @@ public class StartGameScript : MonoBehaviour
     {
         Debug.Log("点击Exit");
         dialog.ShowMessage("Do you make sure to exit?");
-        dialog.SubscribeToConfirmButton( () => {
-              Application.Quit();
+        dialog.SubscribeToConfirmButton(() =>
+        {
+            Application.Quit();
         });
 
-        dialog.SubscribeToCancelButton( () => {
-                dialog.HideMessage();
+        dialog.SubscribeToCancelButton(() =>
+        {
+            dialog.HideMessage();
         });
-       
+
     }
     //点击开始游戏按钮
     public void startGameButtonClicked()
     {
-
-        startGame = true;
         // toast.Show("加载GameScene");
         if (playAdsVideo)
         {
@@ -136,15 +133,15 @@ public class StartGameScript : MonoBehaviour
         else
         {
             Debug.Log("加载GameScene");
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene(1);
         }
     }
 
-    public void SelectLevelButtonClicked(){
-         Debug.Log("选择关卡");
-
+    public void SelectLevelButtonClicked()
+    {
+        Debug.Log("选择关卡");
     }
-    
+
 
 
     // RewardVideo Listener Event
@@ -175,6 +172,7 @@ public class StartGameScript : MonoBehaviour
     // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
     void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
     {
+        OnRewardVideoRewarded.Invoke();
     }
     // The rewarded video ad was failed to show.
     void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
@@ -211,7 +209,7 @@ public class StartGameScript : MonoBehaviour
     // Invoked when the interstitial ad closed and the user went back to the application screen.
     void InterstitialOnAdClosedEvent(IronSourceAdInfo adInfo)
     {
-        SceneManager.LoadScene("GameScene");
+        OnInterstitialClosed.Invoke();
     }
     // Invoked before the interstitial ad was opened, and before the InterstitialOnAdOpenedEvent is reported.
     // This callback is not supported by all networks, and we recommend using it only if  

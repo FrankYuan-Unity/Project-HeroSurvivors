@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -38,6 +39,7 @@ public class PlayerControl : Character
 
 #endif
         Debug.Log("movedirection");
+        GameManager.GameState = GameState.Playing;
     }
 
     private void OnDisable()
@@ -193,6 +195,18 @@ public class PlayerControl : Character
     //复活
     public void Revive()
     {
+        health = maxHealth;
+        ShowOnHeadHealthBar();
+        input.EnableGameActionInput();
+        GameManager.GameState = GameState.Playing;
 
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        GameManager.onGameOver?.Invoke();
+        GameManager.GameState = GameState.GameOver;
     }
 }

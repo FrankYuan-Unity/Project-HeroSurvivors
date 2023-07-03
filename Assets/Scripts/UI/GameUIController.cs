@@ -20,7 +20,6 @@ public class GameUIController : MonoBehaviour
         btnResume.onClick.AddListener(onResumeButtonClicked);
         btnRestart.onClick.AddListener(onRestartButtonClicked);
         btnMainMenu.onClick.AddListener(onMainMenuButtonClicked);
-
     }
 
 
@@ -46,6 +45,8 @@ public class GameUIController : MonoBehaviour
         menuCanvas.enabled = true;
         playerInput.EnablePauseMenuInput();
         playerInput.SwithToDynamicUpdateMode();
+        GameManager.GameState = GameState.Paused;
+
     }
 
     private void onResumeButtonClicked()
@@ -54,6 +55,7 @@ public class GameUIController : MonoBehaviour
         menuCanvas.enabled = false;
         playerInput.EnableGameActionInput();
         playerInput.SwitchToFixedUpdateMode();
+        GameManager.GameState = GameState.Playing;
     }
 
 
@@ -68,6 +70,6 @@ public class GameUIController : MonoBehaviour
 
     private void onMainMenuButtonClicked()
     {
-
+        SceneManager.LoadScene(0);
     }
 }

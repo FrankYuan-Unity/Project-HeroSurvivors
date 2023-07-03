@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(fileName = "PlayerInput", menuName = "Player Input", order = 0)]
 public class PlayerInput : ScriptableObject, GamePlayerActions.IPlayerActionsActions, GamePlayerActions.IPauseMenuActions
 {
-
+ 
     public event UnityAction<Vector2> onMove = delegate { };
     public event UnityAction<Vector2> onRotateGun = delegate { };
     public event UnityAction onStopMove = delegate { };
@@ -27,7 +27,7 @@ public class PlayerInput : ScriptableObject, GamePlayerActions.IPlayerActionsAct
     public void SwitchActionsMap(InputActionMap actionsMap, bool isUIInput)
     {
         gameActions.Disable();
-        actionsMap.Enable();
+        actionsMap?.Enable();
 
         if (isUIInput)
         {
@@ -55,6 +55,7 @@ public class PlayerInput : ScriptableObject, GamePlayerActions.IPlayerActionsAct
 
     public void EnablePauseMenuInput() => SwitchActionsMap(gameActions.PauseMenu, true);
 
+    public void EnableGameOverScreenInput() => SwitchActionsMap(null, true);
 
     public void SwithToDynamicUpdateMode() => InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
 
