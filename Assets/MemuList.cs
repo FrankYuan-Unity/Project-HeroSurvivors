@@ -9,23 +9,6 @@ public class MemuList : MonoBehaviour
 
     [SerializeField] private bool menuKeys = true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (menuKeys)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Pause();
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Return();
-        }
-
-    }
-
     public void Pause()
     { //游戏暂停
         menuList.SetActive(true);

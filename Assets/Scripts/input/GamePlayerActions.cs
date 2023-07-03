@@ -53,6 +53,15 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b8f3467-b13a-4e5b-a06c-1d836d187083"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -198,6 +207,78 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
                     ""action"": ""RotateGun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c24ce798-c9c1-4b01-82ac-25e2a99e5252"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3eb289c1-bb8c-45de-b022-7077027fa691"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27726499-802b-4f36-92aa-441c92b605c6"",
+                    ""path"": ""*/{Back}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PauseMenu"",
+            ""id"": ""90efd6ae-ec4e-4427-ba2c-cb36e70de5c7"",
+            ""actions"": [
+                {
+                    ""name"": ""Unpause"",
+                    ""type"": ""Button"",
+                    ""id"": ""411ad664-2f78-41a0-9cc1-8e2bd5dbeb88"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2404fa04-252e-4dc8-88fe-69013fb4d307"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba0ef9a7-5437-4f3c-8432-1fbd10c74b99"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -209,6 +290,10 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
         m_PlayerActions_fire = m_PlayerActions.FindAction("fire", throwIfNotFound: true);
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_RotateGun = m_PlayerActions.FindAction("RotateGun", throwIfNotFound: true);
+        m_PlayerActions_Pause = m_PlayerActions.FindAction("Pause", throwIfNotFound: true);
+        // PauseMenu
+        m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
+        m_PauseMenu_Unpause = m_PauseMenu.FindAction("Unpause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +358,7 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_fire;
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_RotateGun;
+    private readonly InputAction m_PlayerActions_Pause;
     public struct PlayerActionsActions
     {
         private @GamePlayerActions m_Wrapper;
@@ -280,6 +366,7 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
         public InputAction @fire => m_Wrapper.m_PlayerActions_fire;
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @RotateGun => m_Wrapper.m_PlayerActions_RotateGun;
+        public InputAction @Pause => m_Wrapper.m_PlayerActions_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -298,6 +385,9 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
             @RotateGun.started += instance.OnRotateGun;
             @RotateGun.performed += instance.OnRotateGun;
             @RotateGun.canceled += instance.OnRotateGun;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -311,6 +401,9 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
             @RotateGun.started -= instance.OnRotateGun;
             @RotateGun.performed -= instance.OnRotateGun;
             @RotateGun.canceled -= instance.OnRotateGun;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -328,10 +421,61 @@ public partial class @GamePlayerActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+    // PauseMenu
+    private readonly InputActionMap m_PauseMenu;
+    private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
+    private readonly InputAction m_PauseMenu_Unpause;
+    public struct PauseMenuActions
+    {
+        private @GamePlayerActions m_Wrapper;
+        public PauseMenuActions(@GamePlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Unpause => m_Wrapper.m_PauseMenu_Unpause;
+        public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseMenuActions set) { return set.Get(); }
+        public void AddCallbacks(IPauseMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Add(instance);
+            @Unpause.started += instance.OnUnpause;
+            @Unpause.performed += instance.OnUnpause;
+            @Unpause.canceled += instance.OnUnpause;
+        }
+
+        private void UnregisterCallbacks(IPauseMenuActions instance)
+        {
+            @Unpause.started -= instance.OnUnpause;
+            @Unpause.performed -= instance.OnUnpause;
+            @Unpause.canceled -= instance.OnUnpause;
+        }
+
+        public void RemoveCallbacks(IPauseMenuActions instance)
+        {
+            if (m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPauseMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PauseMenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
     public interface IPlayerActionsActions
     {
         void OnFire(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnRotateGun(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IPauseMenuActions
+    {
+        void OnUnpause(InputAction.CallbackContext context);
     }
 }

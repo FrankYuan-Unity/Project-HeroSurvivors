@@ -37,6 +37,12 @@ public class PlayerControl : Character
         Debug.Log("movedirection");
     }
 
+    private void OnDisable()
+    {
+        input.onMove -= Move;
+        input.onStopMove -= StopMove;
+    }
+
     private void Update()
     {
         CreateEnemy();
