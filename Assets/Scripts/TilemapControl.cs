@@ -8,7 +8,7 @@ public class TilemapControl : MonoBehaviour
 
     GameObject mainCam;
 
-    float map_width = 13;
+    float map_width = 19;
     float map_height = 8;
 
 

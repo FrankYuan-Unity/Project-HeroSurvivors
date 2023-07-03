@@ -32,15 +32,20 @@ public class PlayerControl : Character
     protected override void OnEnable()
     {
         base.OnEnable();
+#if UNITY_EDITOR
         input.onMove += Move;
         input.onStopMove += StopMove;
+
+#endif
         Debug.Log("movedirection");
     }
 
     private void OnDisable()
     {
+#if UNITY_EDITOR
         input.onMove -= Move;
         input.onStopMove -= StopMove;
+#endif
     }
 
     private void Update()
