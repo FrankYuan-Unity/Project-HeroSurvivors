@@ -21,12 +21,14 @@ public class PlayerControl : Character
 
     [SerializeField] int experiencePoint = 0;
     [SerializeField] int currentLevel = 1;
-    int[] levelExps = new int[] { 2, 3, 4 };
+    int[] levelExps = new int[] { 2, 5, 9 };
 
     [Header("------UI-----")]
     private int killedNo = 0;
     [SerializeField] Text levelText;
     [SerializeField] Text killedText;
+
+    [SerializeField] Image expLevelBar;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -89,14 +91,31 @@ public class PlayerControl : Character
 
         for (var i = 0; i < levelExps.Length; i++)
         {
-            if (experiencePoint >= levelExps[i])
+            if (i == 0)
             {
-                currentLevel = i + 1;
+                currentLevel = 1;
+                expLevelBar.fillAmount = (float)experiencePoint / levelExps[i];
+
+            }
+            else
+            {
+                if (experiencePoint >= levelExps[i - 1] && experiencePoint < levelExps[i])
+                {
+                    currentLevel = i + 1;
+                    expLevelBar.fillAmount = (float)(experiencePoint - levelExps[i - 1]) / (levelExps[i] - levelExps[i - 1]);
+                }
+                else if (experiencePoint > levelExps[levelExps.Length - 1])
+                {
+                    currentLevel = levelExps.Length;
+                    expLevelBar.fillAmount = 1f;
+                }
+
             }
         }
         levelText.text = "Lv." + currentLevel;
-        guns[1].GetComponent<WeaponScript>().changeWeaponPower(currentLevel-1);
+        guns[1].GetComponent<WeaponScript>().changeWeaponPower(currentLevel - 1);
     }
+
 
     public void addKilled()
     {
@@ -127,8 +146,7 @@ public class PlayerControl : Character
         {
             createEnemyTime = 2f;
 
-            PoolManage.Release(angryPigPrefab, new Vector3(Random.Range(original.x + size.x / 2, original.x - size.x / 2),
-             Random.Range(original.y + size.y / 2, original.y - size.y / 2), 0), Quaternion.identity);
+            PoolManage.Release(angryPigPrefab, Viewport.Instance.RandomRightHalfPosition(0, 0));
         }
     }
 
