@@ -233,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 6758102689375464113}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.591, y: 0.213, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6758102689822526569}
@@ -348,8 +348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVFX: {fileID: 1587261729604890, guid: 600ec83cba1cec448bf41a6607229741, type: 3}
-  maxHealth: 0
+  maxHealth: 100
   showOnHeadHealthBar: 1
+  onHeadHealthBar: {fileID: 5007413335449353729, guid: 67fb5bb69ab5a4b949ddec48c767b1ec, type: 3}
   health: 100
   Damage: 8
   input: {fileID: 11400000, guid: e09c27dfa62664fab9745cf9b775d92d, type: 2}

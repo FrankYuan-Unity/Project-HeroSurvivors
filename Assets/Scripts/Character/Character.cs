@@ -8,11 +8,11 @@ public class Character : MonoBehaviour
     // [SerializeField] AudioData[] deathSFX;
 
     [Header("---- HEALTH ----")]
-    [SerializeField] protected float maxHealth = 100;
+    [SerializeField] protected float maxHealth = 100f;
     [SerializeField] bool showOnHeadHealthBar = true;
-    // [SerializeField] StatsBar onHeadHealthBar;
+    [SerializeField] StatusBar onHeadHealthBar;
 
-    public float health =100;
+    public float health = 100f;
 
     [SerializeField] public float Damage = 1f;
 
@@ -24,7 +24,7 @@ public class Character : MonoBehaviour
         {
             ShowOnHeadHealthBar();
         }
-        else 
+        else
         {
             HideOnHeadHealthBar();
         }
@@ -32,17 +32,21 @@ public class Character : MonoBehaviour
 
     public void ShowOnHeadHealthBar()
     {
-        // onHeadHealthBar.gameObject.SetActive(true);
-        // onHeadHealthBar.Initialize(health, maxHealth);
+        onHeadHealthBar.gameObject.SetActive(true);
+        onHeadHealthBar.UpdateStats(health, maxHealth);
     }
 
     public void HideOnHeadHealthBar()
     {
-        // onHeadHealthBar.gameObject.SetActive(false);
+        onHeadHealthBar.gameObject.SetActive(false);
     }
 
     public virtual void TakeDamage(float damage)
     {
+        if (health <= 0f)
+        {
+            Die();
+        }
         if (health == 0f) return;
 
         health -= damage;
@@ -50,12 +54,7 @@ public class Character : MonoBehaviour
         Debug.Log("Take damage : " + damage + "gameobject name is :" + name);
         if (showOnHeadHealthBar)
         {
-            // onHeadHealthBar.UpdateStats(health, maxHealth);
-        }
-
-        if (health <= 0f)
-        {
-            Die();
+            onHeadHealthBar.UpdateStats(health, maxHealth);
         }
     }
 
@@ -65,6 +64,7 @@ public class Character : MonoBehaviour
         // AudioManager.Instance.PlayRandomSFX(deathSFX);
         PoolManage.Release(deathVFX, transform.position);
         gameObject.SetActive(false);
+        HideOnHeadHealthBar();
     }
 
     public virtual void RestoreHealth(float value)
@@ -74,10 +74,10 @@ public class Character : MonoBehaviour
         // health += value;
         // health = Mathf.Clamp(health, 0f, maxHealth);
         health = Mathf.Clamp(health + value, 0f, maxHealth);
-        
+
         if (showOnHeadHealthBar)
         {
-            // onHeadHealthBar.UpdateStats(health, maxHealth);
+            onHeadHealthBar.UpdateStats(health, maxHealth);
         }
     }
 

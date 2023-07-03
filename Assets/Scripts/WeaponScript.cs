@@ -20,7 +20,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] public GameObject bulletPrefab2;
     [SerializeField] public GameObject bulletPrefab3;
 
-    [SerializeField, Range(0, 2)] int weaponPower = 0;
+    [SerializeField, Range(0, 2)] int weaponPower = 2;
 
 
     private Vector2 mousePos; //鼠标位置
@@ -97,6 +97,10 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
+    public void changeWeaponPower(int power)
+    {
+        this.weaponPower = power;
+    }
     private void RotateGun(Vector2 dir)
     {
 

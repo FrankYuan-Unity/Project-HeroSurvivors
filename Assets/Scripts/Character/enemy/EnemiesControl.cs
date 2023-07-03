@@ -1,14 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class EnemiesControl : Character
 {
     [SerializeField] float speed = 1f;
+
+    [SerializeField] GameObject gemObject;
     GameObject target;
     private int blood = 70;
     public int damage = 200;
 
     private Vector3 scaleV;
+
+    private int killedNo = 0;
+    
 
     // float paddingX, paddingY;
 
@@ -29,33 +35,13 @@ public class EnemiesControl : Character
         // StartCoroutine(MoveBehavior());
         target = GameObject.FindGameObjectWithTag("Player");
     }
-    void OnDisable()
+
+    public override void Die()
     {
-        // StopAllCoroutines();
+        base.Die();
+        PoolManage.Release(gemObject, transform.position);
+        target.GetComponent<PlayerControl>().addKilled();
     }
-
-    // IEnumerator MoveBehavior()
-    // {
-    //     while (gameObject.activeSelf)
-    //     {
-    //         Vector3 v3 = target.transform.position - transform.position;
-    //         scaleV = transform.localScale;
-    //         if (v3.x > 0)
-    //         {
-    //             scaleV.x = -1.75f;
-    //             transform.localScale = scaleV;
-    //         }
-    //         else
-    //         {
-    //             scaleV.x = 1.75f;
-    //             transform.localScale = scaleV;
-    //         }
-
-    //         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.fixedDeltaTime);
-
-    //         yield return waitForFixedUpdate;
-    //     }
-    // }
 
 
     private void Update()
@@ -80,12 +66,12 @@ public class EnemiesControl : Character
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("collision has been triggered");
+        Debug.Log("collision has been triggered :" + collision.gameObject.name);
         if (collision.gameObject.tag.Equals("Player"))
         {
             bool canDamage = collision.gameObject.TryGetComponent<Character>(out Character character);
             if (canDamage)
-                character.TakeDamage(damage);
+                collision.gameObject.GetComponent<PlayerControl>().TakeDamage(damage);
         }
     }
 

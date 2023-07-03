@@ -8,8 +8,9 @@ public class PoolManage : MonoBehaviour
     static Dictionary<GameObject, Pool> poolDictionary;
     [SerializeField] public Pool[] poolParticles;
     [SerializeField] public Pool[] vFXPools;
-
     [SerializeField] public Pool[] enemyPools;
+
+    [SerializeField] public Pool[] gemPools;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class PoolManage : MonoBehaviour
         Initialize(poolParticles);
         Initialize(vFXPools);
         Initialize(enemyPools);
+        Initialize(gemPools);
     }
 
     void CheckPoolSize(Pool[] pools)
@@ -40,6 +42,7 @@ public class PoolManage : MonoBehaviour
         CheckPoolSize(poolParticles);
         CheckPoolSize(vFXPools);
         CheckPoolSize(enemyPools);
+        CheckPoolSize(gemPools);
     }
 
 #endif

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -16,9 +17,16 @@ public class PlayerControl : Character
     public FixedJoystick joystick; //摇杆
 
     public float fireTime = 1f; //初始每秒钟打出一发子弹，增加射速后此参数减小
-
     Vector3 size;
 
+    [SerializeField] int experiencePoint = 0;
+    [SerializeField] int currentLevel = 1;
+    int[] levelExps = new int[] { 2, 3, 4 };
+
+    [Header("------UI-----")]
+    private int killedNo = 0;
+    [SerializeField] Text levelText;
+    [SerializeField] Text killedText;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -75,6 +83,28 @@ public class PlayerControl : Character
         input.EnableGameActionInput();
     }
 
+    public void GainGems(int exp)
+    {
+        experiencePoint += exp;
+
+        for (var i = 0; i < levelExps.Length; i++)
+        {
+            if (experiencePoint >= levelExps[i])
+            {
+                currentLevel = i + 1;
+            }
+        }
+        levelText.text = "Lv." + currentLevel;
+        guns[1].GetComponent<WeaponScript>().changeWeaponPower(currentLevel-1);
+    }
+
+    public void addKilled()
+    {
+        killedNo++;
+
+        killedText.text = killedNo.ToString();
+    }
+
     public float moveSpeed = 5f;
 
     private Vector2 direction;
@@ -89,8 +119,6 @@ public class PlayerControl : Character
         Debug.Log("calculateResult = " + res);
         return res;
     }
-
-
     public void CreateEnemy()
     {
         createEnemyTime -= Time.deltaTime;
@@ -118,7 +146,6 @@ public class PlayerControl : Character
         }
 
     }
-
 
     private void SetGunIndexActive(int index)
     {
