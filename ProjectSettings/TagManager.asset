@@ -5,19 +5,20 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemies
+  - GEM
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - GameObject
+  - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - PlayerProjectile
+  - Enemy Projectile
+  - Interactable
+  - Gem
   - 
   - 
   - 
