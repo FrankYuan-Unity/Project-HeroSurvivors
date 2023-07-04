@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class StartGameScript : MonoBehaviour
 {
-    public static bool playAdsVideo = false;
+    public static bool playAdsVideo = true;
 
     private PopupDialog dialog;
 
@@ -14,7 +14,7 @@ public class StartGameScript : MonoBehaviour
     public static event UnityAction OnInterstitialClosed = delegate { };
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ISAdQualityConfig config = new ISAdQualityConfig();
 
@@ -33,9 +33,6 @@ public class StartGameScript : MonoBehaviour
             ISAdQualityConfig adQualityConfig = new ISAdQualityConfig();
             adQualityConfig.UserId = "MyUserId";
             IronSourceAdQuality.Initialize(appKey, adQualityConfig);
-
-
-
 
             //Init IronSource SDK
             IronSource.Agent.shouldTrackNetworkState(true);
@@ -79,6 +76,15 @@ public class StartGameScript : MonoBehaviour
             IronSource.Agent.loadInterstitial();
             IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
         }
+    }
+
+    private void OnEnable()
+    {
+        IronSource.Agent.displayBanner();
+    }
+    private void OnDisable()
+    {
+        IronSource.Agent.hideBanner();
     }
 
     private void InterstitialClosed()
@@ -165,14 +171,14 @@ public class StartGameScript : MonoBehaviour
     // The Rewarded Video ad view is about to be closed. Your activity will regain its focus.
     void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
     {
-        GameObject.Find("Main Camera").GetComponent<MemuList>().Revive();
+        OnRewardVideoRewarded.Invoke();
     }
     // The user completed to watch the video, and should be rewarded.
     // The placement parameter will include the reward data.
     // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
     void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
     {
-        OnRewardVideoRewarded.Invoke();
+
     }
     // The rewarded video ad was failed to show.
     void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
