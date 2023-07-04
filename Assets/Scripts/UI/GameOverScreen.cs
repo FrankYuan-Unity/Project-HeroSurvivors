@@ -89,6 +89,7 @@ public class GameOverScreen : MonoBehaviour
         player.SetActive(true);
         player.GetComponent<PlayerControl>().Revive();
         gameOverCanvas.enabled = false;
+        controlCanvas.enabled = true;
         Time.timeScale = 1f;
     }
 
