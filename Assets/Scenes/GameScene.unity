@@ -2191,7 +2191,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 742578145757949462, guid: 5e33c0a917c54494ab99696d41a79112, type: 3}
       propertyPath: m_text
-      value: RETRIVE
+      value: REVIVE
       objectReference: {fileID: 0}
     - target: {fileID: 2711922644184003248, guid: 5e33c0a917c54494ab99696d41a79112, type: 3}
       propertyPath: m_Pivot.x
@@ -2279,7 +2279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4559203929622692605, guid: 5e33c0a917c54494ab99696d41a79112, type: 3}
       propertyPath: m_Name
-      value: RETRIVE
+      value: REVIVE
       objectReference: {fileID: 0}
     - target: {fileID: 4786474303168179408, guid: 5e33c0a917c54494ab99696d41a79112, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2300,17 +2300,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2711922644184003248, guid: 5e33c0a917c54494ab99696d41a79112, type: 3}
   m_PrefabInstance: {fileID: 1038068745}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &705121322 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 991579847359596734, guid: 5e33c0a917c54494ab99696d41a79112, type: 3}
-  m_PrefabInstance: {fileID: 1038068745}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &729390391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4967,8 +4956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b7be3ca0924461fb0fee0aa7ccfa13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnRetrive: {fileID: 1997808206}
-  btnRestart: {fileID: 705121322}
+  btnRevive: {fileID: 1997808206}
+  btnRestart: {fileID: 1997808206}
   btnMainMenu: {fileID: 1871298215}
   controlCanvas: {fileID: 217980902}
   pauseMenuCanvas: {fileID: 888531056}

@@ -20,6 +20,7 @@ public class GameOverScreen : MonoBehaviour
 
     private void OnEnable()
     {
+        Time.timeScale = 1f;
         StartGameScript.OnRewardVideoRewarded += OnRewardVideoRewarded;
         btnRevive.onClick.AddListener(OnReviveButtonClicked);
         btnRestart.onClick.AddListener(OnRestartButtonClicked);
@@ -94,13 +95,21 @@ public class GameOverScreen : MonoBehaviour
     private void OnRestartButtonClicked()
     {
         SceneManager.LoadScene(1);
-        gameOverCanvas.enabled = false;
         Time.timeScale = 1f;
     }
 
     private void OnMainMenuButtonClicked()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void onResume()
+    {
+        Time.timeScale = 1f;
+
+        playerInput.EnableGameActionInput();
+        playerInput.SwitchToFixedUpdateMode();
+        GameManager.GameState = GameState.Playing;
     }
 
 }
