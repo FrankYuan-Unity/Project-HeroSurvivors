@@ -15,6 +15,7 @@ public class GameUIController : MonoBehaviour
 
     void OnEnable()
     {
+        Time.timeScale = 1f;
         playerInput.OnGamePause += GamePause;
         playerInput.OnGameUnpause += GameUnpause;
         btnResume.onClick.AddListener(onResumeButtonClicked);
