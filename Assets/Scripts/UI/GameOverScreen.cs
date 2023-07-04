@@ -41,7 +41,7 @@ public class GameOverScreen : MonoBehaviour
 
     private void OnRewardVideoRewarded()
     {
-
+        OnRevive();
     }
 
     private void OnGameOver()
