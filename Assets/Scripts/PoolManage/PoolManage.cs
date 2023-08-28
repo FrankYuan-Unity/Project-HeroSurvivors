@@ -18,8 +18,8 @@ public class PoolManage : MonoBehaviour
     
         Initialize(poolParticles);
         Initialize(vFXPools);
-        Initialize(enemyPools);
         Initialize(gemPools);
+        Initialize(enemyPools);
     }
 
     void CheckPoolSize(Pool[] pools)

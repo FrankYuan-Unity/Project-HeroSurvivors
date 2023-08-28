@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class StartGameScript : MonoBehaviour
 {
-    public static bool playAdsVideo = true;
+    public static bool playAdsVideo = false;
 
     private PopupDialog dialog;
 
@@ -16,6 +16,7 @@ public class StartGameScript : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        IronSource.Agent.setMetaData("is_test_suite", "enable");
         ISAdQualityConfig config = new ISAdQualityConfig();
 
         dialog = dialogPreb.GetComponent<PopupDialog>();
@@ -23,7 +24,7 @@ public class StartGameScript : MonoBehaviour
         if (playAdsVideo)
         {
 #if UNITY_ANDROID
-            string appKey = "8545d445";
+            string appKey = "c75b29b5";
 #elif UNITY_IPHONE
         string appKey = "8545d445";
 #else
@@ -37,6 +38,7 @@ public class StartGameScript : MonoBehaviour
             //Init IronSource SDK
             IronSource.Agent.shouldTrackNetworkState(true);
             string id = IronSource.Agent.getAdvertiserId();
+            IronSource.Agent.setManualLoadRewardedVideo(false);
             Debug.Log("unity-script: IronSource.Agent.getAdvertiserId : " + id);
 
             Debug.Log("unity-script: IronSource.Agent.validateIntegration");
@@ -70,6 +72,7 @@ public class StartGameScript : MonoBehaviour
 
             OnInterstitialClosed += InterstitialClosed;
             Debug.Log("unity-script: unity version" + IronSource.unityVersion());
+
 
             Debug.Log("初始化");
             IronSource.Agent.init(appKey);
@@ -107,13 +110,13 @@ public class StartGameScript : MonoBehaviour
     //点击Exit按钮
     public void ExitButtonClick()
     {
+        // IronSource.Agent.launchTestSuite(); 
         Debug.Log("点击Exit");
         dialog.ShowMessage("Do you make sure to exit?");
         dialog.SubscribeToConfirmButton(() =>
         {
             Application.Quit();
         });
-
         dialog.SubscribeToCancelButton(() =>
         {
             dialog.HideMessage();

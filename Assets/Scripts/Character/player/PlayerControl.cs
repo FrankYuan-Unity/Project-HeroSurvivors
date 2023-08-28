@@ -52,7 +52,7 @@ public class PlayerControl : Character
 
     private void Update()
     {
-        CreateEnemy();
+        // CreateEnemy();
 #if UNITY_EDITOR
         return;
 #else
