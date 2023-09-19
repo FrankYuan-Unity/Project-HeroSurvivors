@@ -12,11 +12,11 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] bool spawnEnemy = true;
     [SerializeField] GameObject waveUI;
     [SerializeField] GameObject[] enemyPrefabs;
-    [SerializeField] float timeBetweenSpawns = 1f;
+    [SerializeField] float timeBetweenSpawns = 0.5f;
     [SerializeField] float timeBetweenWaves = 1f;
     [SerializeField] int minEnemyAmount = 4;
     [SerializeField] int maxEnemyAmount = 10;
-    
+
     [Header("---- Boss Settings ----")]
     [SerializeField] GameObject bossPrefab;
     [SerializeField] int bossWaveNumber;
@@ -44,12 +44,15 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         while (spawnEnemy && GameManager.GameState != GameState.GameOver)
         {
-            // waveUI.SetActive(true);
+            print("waveNumber = " + waveNumber);
+            if (waveNumber == 2)
+                waveUI.SetActive(true);
 
             yield return waitTimeBetweenWaves;
 
-            // waveUI.SetActive(false);
-            
+            if (waveNumber == 2)
+                waveUI.SetActive(false);
+
             yield return StartCoroutine(nameof(RandomlySpawnCoroutine));
         }
     }
@@ -63,14 +66,15 @@ public class EnemyManager : Singleton<EnemyManager>
         // }
         // else 
         // {
-            enemyAmount = Mathf.Clamp(enemyAmount, minEnemyAmount + waveNumber / bossWaveNumber, maxEnemyAmount);
+        enemyAmount = Mathf.Clamp(enemyAmount, minEnemyAmount + waveNumber / bossWaveNumber, maxEnemyAmount);
 
-            for (int i = 0; i < enemyAmount; i++)
-            {
-                enemyList.Add(PoolManage.Release(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)]));
+        for (int i = 0; i < enemyAmount; i++)
+        {
+            GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+            enemyList.Add(PoolManage.Release(enemyPrefab, Viewport.Instance.RandomEnemyBirthPosition(0, 0)));
 
-                yield return waitTimeBetweenSpawns;
-            }
+            yield return waitTimeBetweenSpawns;
+        }
         // }
 
         yield return waitUntilNoEnemy;

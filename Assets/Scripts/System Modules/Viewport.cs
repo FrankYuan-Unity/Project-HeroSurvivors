@@ -7,7 +7,10 @@ public class Viewport : Singleton<Viewport>
     float minY;
     float maxY;
     float middleX;
-
+    float middleY;
+    float diagonal;
+    int screenWidth;
+    int screenHeight;
     public float MaxX => maxX;
 
     void Start()
@@ -17,12 +20,19 @@ public class Viewport : Singleton<Viewport>
         Vector2 bottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0f, 0f));
         Vector2 topRight = mainCamera.ViewportToWorldPoint(new Vector3(1f, 1f));
 
-        middleX = mainCamera.ViewportToWorldPoint(new Vector3 (0.5f, 0f, 0f)).x;
+        middleX = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0f, 0f)).x;
+        middleY = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0f, 0f)).y;
+
 
         minX = bottomLeft.x;
         minY = bottomLeft.y;
         maxX = topRight.x;
         maxY = topRight.y;
+
+        screenWidth = (int)(maxX - minX);
+        screenHeight = (int)(maxY - minY);
+        diagonal = Mathf.Sqrt(screenWidth * screenWidth + screenHeight * screenHeight);
+
     }
 
     public Vector3 PlayerMoveablePosition(Vector3 playerPosition, float paddingX, float paddingY)
@@ -62,6 +72,22 @@ public class Viewport : Singleton<Viewport>
         position.x = Random.Range(minX + paddingX, maxX - paddingX);
         position.y = Random.Range(minY + paddingY, maxY - paddingY);
 
+        return position;
+    }
+
+    public Vector3 RandomEnemyBirthPosition(float paddingX, float paddingY)
+    {
+        // 生成一个随机方向的单位向量
+        Vector2 randomDir = Random.insideUnitCircle.normalized;
+
+        // 计算目标位置,距离屏幕中心半个对角线长度
+        Vector3 position = new Vector3(middleX + randomDir.x * diagonal / 2, middleY + randomDir.y * diagonal / 2, 0);
+
+        // 确认位置在屏幕外
+        // if (Mathf.Abs(position.x) < screenWidth / 2 && Mathf.Abs(position.y) < screenHeight / 2)
+        // {
+        //     position = -position;
+        // }
         return position;
     }
 }

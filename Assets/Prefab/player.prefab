@@ -281,7 +281,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1110936845, guid: fef56fe3f399c4b38bd7712938e47edb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -360,6 +360,11 @@ MonoBehaviour:
   - {fileID: 1184640391317483860}
   joystick: {fileID: 0}
   fireTime: 1
+  experiencePoint: 0
+  currentLevel: 1
+  levelText: {fileID: 0}
+  killedText: {fileID: 0}
+  expLevelBar: {fileID: 0}
   moveSpeed: 5
 --- !u!61 &6758102689375464123
 BoxCollider2D:
