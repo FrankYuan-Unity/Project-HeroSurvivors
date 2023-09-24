@@ -77,53 +77,50 @@ public class PoolManage : MonoBehaviour
     /// <returns></returns>
     public static GameObject Release(GameObject prefab)
     {
-#if UNITY_EDITOR
-        if (!poolDictionary.ContainsKey(prefab))
-        {
-            Debug.LogError("Alert: Can't release prefab which don't contains in distionary" + prefab.name);
+        if(!CheckPrefab(prefab)){
             return null;
         }
-#endif
+
 
         return poolDictionary[prefab].PrepareObject();
     }
     public static GameObject Release(GameObject prefab, Vector3 position)
     {
-#if UNITY_EDITOR
-        if (!poolDictionary.ContainsKey(prefab))
-        {
-            Debug.LogError("Alert: Can't release prefab which don't contains in distionary" + prefab.name);
+        if(!CheckPrefab(prefab)){
             return null;
         }
-#endif
 
         return poolDictionary[prefab].PrepareObject(position);
     }
 
     public static GameObject Release(GameObject prefab, Vector3 position, Quaternion rotation)
     {
-#if UNITY_EDITOR
-        if (!poolDictionary.ContainsKey(prefab))
-        {
-            Debug.LogError("Alert: Can't release prefab which don't contains in distionary" + prefab.name);
+        if(!CheckPrefab(prefab)){
             return null;
         }
-#endif
 
         return poolDictionary[prefab].PrepareObject(position, rotation);
     }
     public static GameObject Release(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 localScale)
     {
-#if UNITY_EDITOR
-        if (!poolDictionary.ContainsKey(prefab))
-        {
-            Debug.LogError("Alert: Can't release prefab which don't contains in distionary" + prefab.name);
+        if(!CheckPrefab(prefab)){
             return null;
         }
-#endif
 
         return poolDictionary[prefab].PrepareObject(position, rotation, localScale);
     }
 
+
+private bool CheckPrefab(GameObject prefab){
+   #if UNITY_EDITOR
+        if (!poolDictionary.ContainsKey(prefab))
+        {
+            Debug.LogError("Alert: Can't release prefab which don't contains in distionary" + prefab.name);
+            return false;
+        }
+  #endif
+
+  return true;
+}
 
 }
